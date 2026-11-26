@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Articles — The Legal Office Staff Console</title>
+<link rel="stylesheet" href="css/internal.css">
+<style>html{visibility:hidden;}</style>
+</head>
+<body>
+
+<header class="app-topbar" id="appTopbar"></header>
+
+<div class="app-shell">
+  <nav class="app-sidebar" id="appSidebar"></nav>
+
+  <!-- Two views: the article list, and editing an article
+       (Write and Preview side by side). js/articles.js switches between
+       the two views and fills them from /articles. -->
+  <main class="app-main">
+
+    <!-- The list -->
+    <div class="art-view" id="artListView">
+      <div class="rd-heading">
+        <div class="rd-title">
+          <h1 class="page-title">Articles</h1>
+          <p class="page-subtitle">Short articles for the public Home page. Staff write drafts; the Head Attorney publishes them.</p>
+        </div>
+        <button type="button" class="btn btn-primary" id="articleNewBtn">Write an article</button>
+      </div>
+
+      <div id="articlePageMsg" role="status"></div>
+
+      <details class="rd-card art-howto">
+        <summary>
+          <span class="art-howto-icon" id="artHowtoIcon"></span>
+          <span class="art-howto-title">How drafts, publishing and hiding work</span>
+          <span class="art-howto-chev" id="artHowtoChev"></span>
+        </summary>
+        <div class="art-howto-body">
+          <p>Anyone on staff can write a draft and edit their own drafts. The Head Attorney can edit any draft.</p>
+          <p>Only the Head Attorney publishes an article, hides it, or changes it once it has been published.
+            A published article is on the public Home page (the three newest) and on the public Articles page.</p>
+          <p>The public sees “The Legal Office” and the date it was first published, never the name of the staff
+            member who wrote it.</p>
+          <p>Articles are never deleted: a published article can be hidden and published again later.</p>
+        </div>
+      </details>
+
+      <div class="art-filter" role="group" aria-labelledby="artFilterLabel">
+        <span class="art-filter-label" id="artFilterLabel">Show</span>
+        <button type="button" class="rd-chip current" data-filter="" aria-pressed="true">All <span class="art-chip-n" data-count=""></span></button>
+        <button type="button" class="rd-chip" data-filter="draft" aria-pressed="false">Drafts <span class="art-chip-n" data-count="draft"></span></button>
+        <button type="button" class="rd-chip" data-filter="published" aria-pressed="false">Published <span class="art-chip-n" data-count="published"></span></button>
+        <button type="button" class="rd-chip" data-filter="hidden" aria-pressed="false">Hidden <span class="art-chip-n" data-count="hidden"></span></button>
+      </div>
+
+      <section class="rd-card art-list" aria-label="Articles">
+        <div class="table-wrap">
+          <table class="data-table art-table" id="articleTable">
+            <thead><tr><th>Title</th><th>Status</th><th>Written by</th><th>Last edited</th><th>First published</th><th>Actions</th></tr></thead>
+          </table>
+        </div>
+        <p class="art-foot" id="articleFoot" hidden></p>
+      </section>
+    </div>
+
+    <!-- Write / edit, or read only (articles this staff member may not edit) -->
+    <div class="art-view" id="artEditView" hidden>
+      <div class="rd-heading">
+        <button type="button" class="back-btn" id="artBackBtn" aria-label="Back to the articles" title="Back to the articles"></button>
+        <div class="rd-title">
+          <div class="art-title-row">
+            <h1 class="page-title" id="editorTitle">Edit article</h1>
+            <span class="status-label" id="editorStatus" hidden></span>
+          </div>
+          <p class="page-subtitle" id="editorMeta"></p>
+        </div>
+      </div>
+
+      <p class="page-msg" id="editorNotice" hidden></p>
+
+      <form id="articleForm" novalidate>
+        <div class="art-columns" id="artColumns">
+          <section class="rd-card art-write" id="artWrite" aria-labelledby="artWriteTitle">
+            <div class="art-card-head">
+              <h2 class="art-card-title" id="artWriteTitle">Write</h2>
+              <p class="art-card-note">Plain text with a few simple marks. Changes show in the preview as you type.</p>
+            </div>
+            <div class="rd-field">
+              <label class="rd-label" for="articleTitle">Title</label>
+              <input type="text" class="rd-input" id="articleTitle" maxlength="200" required>
+            </div>
+            <div class="rd-field">
+              <label class="rd-label" for="articleBody">Text</label>
+              <textarea class="rd-textarea art-text" id="articleBody" maxlength="20000" spellcheck="true" required aria-describedby="articleCount artMarksTitle"></textarea>
+              <p class="rd-hint art-count" id="articleCount">0 / 20,000</p>
+            </div>
+            <div class="art-marks">
+              <p class="art-marks-title" id="artMarksTitle">Simple marks</p>
+              <ul class="art-marks-list">
+                <li><code>## Heading</code> a heading (start of a line)</li>
+                <li><code>**words**</code> bold</li>
+                <li><code>- item</code> a list item (start of a line)</li>
+                <li><code>https://…</code> a link</li>
+                <li><code>blank line</code> a new paragraph</li>
+              </ul>
+              <p class="art-marks-note">No pictures or other formatting.</p>
+            </div>
+          </section>
+
+          <!-- Preview: the same formatter as the public article page (../js/article-format.js) -->
+          <section class="rd-card art-preview side-sticky" id="artPreview" aria-labelledby="artPreviewLabel">
+            <div class="art-preview-head">
+              <p class="art-preview-label" id="artPreviewLabel">Preview · how the public will see it</p>
+              <p class="art-preview-live" id="artPreviewLive">Updates as you type</p>
+            </div>
+            <article class="art-article">
+              <h2 class="art-article-title" id="previewTitle"></h2>
+              <p class="art-article-byline">The Legal Office · <span id="previewDate"></span></p>
+              <div class="article-body" id="previewBody"></div>
+            </article>
+          </section>
+        </div>
+
+        <p class="art-form-error" id="articleFormMsg" role="alert"></p>
+        <div class="art-actions">
+          <button type="button" class="btn btn-secondary" id="articleCloseBtn">Close</button>
+          <button type="submit" class="btn btn-primary" id="articleSaveBtn">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+
+<script src="js/api-config.js"></script>
+<script src="js/auth-guard.js"></script>
+<script src="js/api-data.js"></script>
+<script src="js/render-helper.js"></script>
+<script src="js/components.js"></script>
+<script src="../js/article-format.js"></script>
+<script src="js/articles.js"></script>
+</body>
+</html>

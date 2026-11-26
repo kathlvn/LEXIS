@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff login — The Legal Office Staff Console</title>
+<link rel="stylesheet" href="css/internal.css">
+<link rel="stylesheet" href="css/login.css">
+</head>
+<body class="login-body">
+
+<!-- js/login.js switches between the login form,
+     the email-code step (new accounts) and the "choose a new password" step
+     (a password the Head Attorney set) inside the same card. -->
+<main class="login-shell">
+  <div class="login-brand">
+    <img class="login-seal" src="../img/essu-logo.png" alt="" width="40" height="40">
+    <span class="login-brand-name">The Legal Office</span>
+  </div>
+
+  <div class="login-card">
+    <div class="login-head">
+      <h1 class="login-title" id="loginTitle">Staff login</h1>
+      <p class="login-lede" id="loginLede">Log in with your ESSU staff account.</p>
+    </div>
+
+    <p class="login-msg" id="loginMessage" hidden></p>
+
+    <form id="loginForm" class="login-form" novalidate>
+      <div class="rd-field">
+        <label class="rd-label" for="loginEmail">Email address</label>
+        <input class="rd-input" type="email" id="loginEmail" autocomplete="username" placeholder="name@essu.edu.ph" maxlength="254" required>
+      </div>
+
+      <div class="rd-field">
+        <label class="rd-label" for="loginPassword">Password</label>
+        <div class="login-pw">
+          <input class="rd-input" type="password" id="loginPassword" autocomplete="current-password" maxlength="256" required>
+          <button type="button" class="login-pw-toggle" id="passwordToggle" aria-controls="loginPassword" aria-pressed="false" aria-label="Show password">Show</button>
+        </div>
+      </div>
+
+      <button class="btn btn-primary btn-block" type="submit" id="loginSubmitBtn">Log in</button>
+    </form>
+
+    <form id="verifyForm" class="login-form" novalidate hidden>
+      <div class="rd-field">
+        <label class="rd-label" for="verifyCode">Verification code</label>
+        <input class="rd-input login-code" type="text" id="verifyCode" inputmode="numeric" pattern="[0-9]*" maxlength="6" autocomplete="one-time-code" required>
+      </div>
+
+      <button class="btn btn-primary btn-block" type="submit" id="verifySubmitBtn">Verify</button>
+
+      <div class="login-links">
+        <p class="login-small">Didn't get a code? <button type="button" class="login-link" id="resendCodeLink">Send a new code</button></p>
+        <p class="login-small"><button type="button" class="login-link" id="backToLoginLink">Back to login</button></p>
+      </div>
+    </form>
+
+    <form id="newPasswordForm" class="login-form" novalidate hidden>
+      <!-- For password managers: which account the new password belongs to. -->
+      <input type="email" id="newPwUsername" autocomplete="username" hidden readonly>
+
+      <div class="rd-field">
+        <label class="rd-label" for="newPassword">New password</label>
+        <div class="login-pw">
+          <input class="rd-input" type="password" id="newPassword" autocomplete="new-password" minlength="12" maxlength="256" aria-describedby="newPasswordHint" required>
+          <button type="button" class="login-pw-toggle" id="newPasswordToggle" aria-controls="newPassword newPasswordConfirm" aria-pressed="false" aria-label="Show passwords">Show</button>
+        </div>
+        <p class="rd-hint" id="newPasswordHint">At least 12 characters. Not the one you were given, not a common word or pattern (like “password” or “123456”), and not your name or email.</p>
+      </div>
+
+      <div class="rd-field">
+        <label class="rd-label" for="newPasswordConfirm">Confirm new password</label>
+        <input class="rd-input" type="password" id="newPasswordConfirm" autocomplete="new-password" maxlength="256" required>
+      </div>
+
+      <button class="btn btn-primary btn-block" type="submit" id="newPasswordSubmitBtn">Save and log in</button>
+
+      <div class="login-links">
+        <p class="login-small"><button type="button" class="login-link" id="newPwBackLink">Back to login</button></p>
+      </div>
+    </form>
+  </div>
+
+  <div class="login-below">
+    <p>For Legal Office staff only.</p>
+    <p>Clients: send and track requests at <a href="../portal.html">My Requests</a>.</p>
+  </div>
+</main>
+
+<script src="js/api-config.js"></script>
+<script src="js/login.js"></script>
+</body>
+</html>

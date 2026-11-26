@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Review — The Legal Office Staff Console</title>
+<link rel="stylesheet" href="css/internal.css">
+<style>html{visibility:hidden;}</style>
+</head>
+<body>
+
+<header class="app-topbar" id="appTopbar"></header>
+
+<div class="app-shell">
+  <nav class="app-sidebar" id="appSidebar"></nav>
+
+  <main class="app-main">
+    <div class="breadcrumb-row" id="breadcrumbRow"></div>
+
+    <div class="list-toolbar" id="listToolbar"></div>
+    <div class="table-wrap queue-table-wrap">
+      <table class="data-table queue-table" id="reviewTable">
+        <thead>
+          <tr>
+            <th>Request ID</th>
+            <th>Service</th>
+            <th>Client</th>
+            <th>Filed</th>
+            <th>Officer</th>
+            <th>Due</th>
+            <th><span class="visually-hidden">Open</span></th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <div class="list-pager" id="listPager"></div>
+  </main>
+</div>
+
+<script src="js/api-config.js"></script>
+<script src="js/auth-guard.js"></script>
+<script src="js/api-data.js"></script>
+<script src="js/render-helper.js"></script>
+<script src="js/components.js"></script>
+<script src="js/request-list.js"></script>
+<script src="js/requests-review.js"></script>
+</body>
+</html>

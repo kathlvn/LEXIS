@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Security Log — The Legal Office Staff Console</title>
+<link rel="stylesheet" href="css/internal.css">
+<style>html{visibility:hidden;}</style>
+</head>
+<body>
+
+<header class="app-topbar" id="appTopbar"></header>
+
+<div class="app-shell">
+  <nav class="app-sidebar" id="appSidebar"></nav>
+
+  <main class="app-main">
+    <div class="breadcrumb-row" id="breadcrumbRow"></div>
+
+    <p class="arc-intro">
+      Things LEXIS blocked or noticed: failed staff logins, requests stopped by the rate limits, verification codes
+      locked after wrong guesses, email limits, and records exports. A type turns <b>red</b> when it reaches its
+      alert level, and you also get a bell notification. Occasional entries are normal (a mistyped password, a
+      wrong code); a sudden jump is worth a look.
+    </p>
+
+    <section class="rpt-section">
+      <div class="rpt-title-row">
+        <h2 class="rpt-title">Summary</h2>
+        <span class="rpt-generated" id="secGenerated"></span>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table rpt-table" id="secSummary">
+          <thead><tr><th>Type</th><th>Last 24 hours</th><th>Last 7 days</th><th>Alert level</th><th>Status</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="rpt-section">
+      <h3 class="rpt-h3">Events</h3>
+      <div class="rpt-controls">
+        <label for="secType">Type</label>
+        <select id="secType"><option value="">All types</option></select>
+        <label for="secDays">Period</label>
+        <select id="secDays">
+          <option value="1">Last 24 hours</option>
+          <option value="7" selected>Last 7 days</option>
+          <option value="30">Last 30 days</option>
+          <option value="90">Last 90 days</option>
+        </select>
+        <span class="holiday-page-msg" id="secMsg" role="status"></span>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table rpt-table" id="secEvents">
+          <thead><tr><th>When</th><th>Type</th><th>Details</th><th>Source address</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="list-pager" id="secPager"></div>
+    </section>
+  </main>
+</div>
+
+<script src="js/api-config.js"></script>
+<script src="js/auth-guard.js"></script>
+<script src="js/api-data.js"></script>
+<script src="js/render-helper.js"></script>
+<script src="js/components.js"></script>
+<script src="js/security-log.js"></script>
+</body>
+</html>

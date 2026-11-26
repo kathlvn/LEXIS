@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings — The Legal Office Staff Console</title>
+<link rel="stylesheet" href="css/internal.css">
+<style>html{visibility:hidden;}</style>
+</head>
+<body>
+
+<header class="app-topbar" id="appTopbar"></header>
+
+<div class="app-shell">
+  <nav class="app-sidebar" id="appSidebar"></nav>
+
+  <!-- The number limits in one card, each
+       wording setting in its own card. js/settings.js draws the cards. -->
+  <main class="app-main">
+    <div class="set-view">
+      <div class="rd-heading">
+        <div class="rd-title">
+          <h1 class="page-title">Settings</h1>
+          <p class="page-subtitle">Limits and wording the Legal Office can change without a programmer. Every change is recorded with who made it and when.</p>
+        </div>
+      </div>
+
+      <div class="set-col">
+        <div id="settingsPageMsg" role="status"></div>
+        <div class="set-list" id="settingsList"><p class="set-loading">Loading settings…</p></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/api-config.js"></script>
+<script src="js/auth-guard.js"></script>
+<script src="js/api-data.js"></script>
+<script src="js/render-helper.js"></script>
+<script src="js/components.js"></script>
+<script src="js/settings.js"></script>
+</body>
+</html>

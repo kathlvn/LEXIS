@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search results — The Legal Office, ESSU</title>
+<link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+
+<header class="site-header" id="siteHeader"></header>
+
+<!-- js/search-results.js fills the count and the results.
+     New wording, for Legal Office review: the kicker and the "Didn't find what you need?" box. -->
+<main class="search-main">
+  <section class="search-hero">
+    <!-- Decorative. The phone copy has a thinner line. -->
+    <picture class="search-hero-symbol">
+      <source media="(max-width: 640px)" srcset="img/icons/symbol-search-phone.svg">
+      <img src="img/icons/symbol-search.svg" alt="">
+    </picture>
+    <p class="search-hero-kicker">Services, articles and pages</p>
+    <h1>Search results</h1>
+    <form class="search-form" role="search" action="search.html" method="get">
+      <label class="search-label" for="searchPageInput">Search the site</label>
+      <div class="search-box">
+        <img src="img/icons/search-field.svg" alt="">
+        <input type="search" id="searchPageInput" name="q" maxlength="100" autocomplete="off">
+        <button class="search-submit" type="submit">Search</button>
+      </div>
+    </form>
+    <p class="search-count" id="searchCount" role="status"></p>
+  </section>
+
+  <div class="search-body">
+    <div class="search-results" id="searchResults"></div>
+    <aside class="search-help">
+      <h2>Didn’t find what you need?</h2>
+      <p>Try fewer or different words, like “contract” instead of “contract review form”.</p>
+      <p>Or email the Legal Office at <a href="mailto:legaloffice@essu.edu.ph">legaloffice@essu.edu.ph</a>.</p>
+      <a class="text-link" href="portal.html">Request a Legal Service <img src="img/icons/arrow-right-green.svg" alt=""></a>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+
+<script src="js/components.js"></script>
+<script src="js/site-page.js" data-nav=""></script>
+<script src="js/api-config.js"></script>
+<script src="js/site-search.js"></script>
+<script src="js/article-format.js"></script>
+<script src="js/search-results.js"></script>
+</body>
+</html>

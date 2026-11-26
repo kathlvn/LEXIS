@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Requests — The Legal Office, ESSU</title>
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="js/vendor/altcha/altcha.css">
+</head>
+<body>
+
+<header class="site-header" id="siteHeader"></header>
+
+<main class="portal-main">
+
+  <!-- 1. THE DOOR: email address, then the one-time code.
+       Shown first, with a loading card, while js/portal.js checks for a signed-in session.
+       New wording, for Legal Office review: the kicker, the step lines, the robot check line,
+       the "Codes come from..." notice, "After you sign in, you can:", and the error titles
+       and messages in js/portal.js. -->
+  <section id="doorView" class="door">
+    <div class="door-hero">
+      <img class="door-symbol" src="img/icons/symbol-key.svg" alt="" width="280" height="280">
+
+      <div class="door-intro">
+        <p class="door-kicker">Sign in to request or follow a legal service</p>
+        <div class="door-title-row">
+          <h1 class="door-title">My Requests</h1>
+          <img class="door-symbol-phone" src="img/icons/symbol-key-phone.svg" alt="" width="56" height="56">
+        </div>
+        <!-- A computer shows the list here; a phone shows one short line, and the list after the form. -->
+        <div class="door-intro-wide">
+          <p class="door-lede">Sign in with your email address to:</p>
+          <ul class="door-can">
+            <li><span class="door-can-icon"><img src="img/icons/door-describe.svg" alt="" width="24" height="24"></span>Submit a request</li>
+            <li><span class="door-can-icon"><img src="img/icons/door-track.svg" alt="" width="24" height="24"></span>Follow your requests</li>
+            <li><span class="door-can-icon"><img src="img/icons/door-document.svg" alt="" width="24" height="24"></span>Download documents released to you</li>
+            <li><span class="door-can-icon"><img src="img/icons/door-message.svg" alt="" width="24" height="24"></span>Message the Legal Office</li>
+          </ul>
+          <p class="door-lede">No password needed — we send you a one-time code.</p>
+        </div>
+        <p class="door-intro-narrow">Sign in with your email address. No password needed — we send you a one-time code.</p>
+      </div>
+
+      <div class="door-signin">
+        <form class="door-card" id="doorForm" novalidate>
+          <div class="door-notice-slot" id="doorTopNotice" role="alert"></div>
+
+          <div class="door-step">
+            <p class="door-step-text" id="doorStepText">Step 1 of 2 · Your email address</p>
+            <div class="door-progress" aria-hidden="true"><span class="is-done"></span><span id="doorProgress2"></span></div>
+          </div>
+
+          <div class="door-skeleton" id="doorSkeleton">
+            <div class="skeleton-bar door-skeleton-label"></div>
+            <div class="skeleton-bar door-skeleton-hint"></div>
+            <div class="skeleton-bar door-skeleton-control"></div>
+            <div class="skeleton-bar door-skeleton-control"></div>
+            <p class="door-skeleton-text" role="status">Loading…</p>
+          </div>
+
+          <div class="door-step-body" id="doorEmailStep" hidden>
+            <div class="field" id="f-doorContact">
+              <label for="doorContact">Email address</label>
+              <span class="field-hint" id="doorContactHint">First time here? Use the email where you want to receive updates. We'll ask for a few details next.</span>
+              <input type="email" id="doorContact" maxlength="254" autocomplete="email" autocapitalize="none" spellcheck="false"
+                placeholder="name@example.com" aria-describedby="doorContactHint" data-hint="doorContactHint">
+              <div class="err" id="doorContactErr" role="alert"></div>
+            </div>
+            <!-- "I'm not a robot" check (ALTCHA, our own copy in js/vendor/altcha): the browser solves a
+                 small puzzle from LEXIS before a code is emailed. Nothing goes to another company.
+                 The widget stays out of sight: js/portal.js starts it when Send code is pressed. -->
+            <div hidden><altcha-widget id="botCheck" auto="off"></altcha-widget></div>
+            <p class="door-robot" id="doorRobot">
+              <img class="door-robot-icon" src="img/icons/shield-check.svg" alt="" width="20" height="20">
+              <span class="door-spinner"></span>
+              <span id="doorRobotText">The robot check runs by itself when you press Send code.</span>
+            </p>
+            <button type="submit" class="nav-btn btn-primary door-submit" id="doorSendBtn">
+              <span id="doorSendLabel">Send code</span>
+              <img src="img/icons/arrow-right-white.svg" alt="" width="20" height="20">
+            </button>
+          </div>
+
+          <div class="door-step-body" id="doorCodeStep" hidden>
+            <div class="field" id="f-doorCode">
+              <label for="doorCode">6-digit code</label>
+              <span class="field-hint door-hint-email" id="doorCodeHint">We sent a code to your email address. It expires in 10 minutes.</span>
+              <input class="door-code-input" type="text" id="doorCode" inputmode="numeric" maxlength="6" autocomplete="one-time-code"
+                placeholder="••••••" aria-describedby="doorCodeHint" data-hint="doorCodeHint">
+              <div class="err" id="doorCodeErr" role="alert"></div>
+            </div>
+            <div class="notice notice-info">
+              <img src="img/icons/info.svg" alt="" width="24" height="24">
+              <div>
+                <p class="notice-title">Codes come from the Legal Office email</p>
+                <p class="notice-message">Not in your inbox? Check Spam or Promotions, or wait a minute and press Resend code.</p>
+              </div>
+            </div>
+            <button type="submit" class="nav-btn btn-primary door-submit" id="doorVerifyBtn">
+              Continue
+              <img src="img/icons/arrow-right-white.svg" alt="" width="20" height="20">
+            </button>
+          </div>
+
+          <div class="door-notice-slot" id="doorNotice" role="alert"></div>
+
+          <div class="door-links" id="doorLinks" hidden>
+            <button type="button" class="text-link" id="doorResendBtn">Resend code</button>
+            <button type="button" class="text-link" id="doorChangeBtn">Use a different email address</button>
+          </div>
+
+          <p class="visually-hidden" id="doorStatus" role="status"></p>
+        </form>
+
+        <div class="door-fineprint">
+          <p class="door-fineprint-main"><b>No email address?</b> Visit the Legal Office during office hours. Staff can file your
+            request for you and keep you updated in person.</p>
+          <p class="door-fineprint-small">The Legal Office will never ask you for this code. This site uses only the cookies needed to keep you
+            signed in (up to two hours, or 30 minutes without activity).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="door-after">
+      <h2 class="door-after-title">After you sign in, you can:</h2>
+      <ul class="door-can">
+        <li><span class="door-can-icon"><img src="img/icons/door-describe.svg" alt="" width="24" height="24"></span>Submit a request</li>
+        <li><span class="door-can-icon"><img src="img/icons/door-track.svg" alt="" width="24" height="24"></span>Follow your requests</li>
+        <li><span class="door-can-icon"><img src="img/icons/door-document.svg" alt="" width="24" height="24"></span>Download documents released to you</li>
+        <li><span class="door-can-icon"><img src="img/icons/door-message.svg" alt="" width="24" height="24"></span>Message the Legal Office</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 2. REGISTRATION / COMPLETE OR EDIT DETAILS.
+       New wording, for Legal Office review: the "One-time setup" and "Your details" kickers,
+       "Not you? Sign out", the required-fields line, the section titles and their hints, the
+       "After you choose..." line, the four privacy points, "What happens next", the "You can
+       change these details later" line, and the error summary and messages in js/portal.js. -->
+  <section id="profileView" style="display:none;">
+    <div class="pf-hero">
+      <img class="pf-symbol" src="img/icons/symbol-id.svg" alt="" width="380" height="380">
+      <img class="pf-symbol-phone" src="img/icons/symbol-id-phone.svg" alt="" width="104" height="104">
+      <p class="pf-kicker" id="profileKicker">One-time setup</p>
+      <div class="pf-hero-text">
+        <h1 class="pf-title" id="profileTitle" tabindex="-1">Tell us who you are</h1>
+        <p class="pf-lede" id="profileLede">We need a few details once. The Legal Office verifies them with your first request.</p>
+      </div>
+      <div class="pf-who" id="profileWho">
+        <p>Signed in as <b id="profileEmail"></b></p>
+        <button type="button" class="text-link text-link-on-dark" id="pfSignOutBtn">Not you? Sign out</button>
+      </div>
+    </div>
+
+    <div class="my-body pf-body">
+      <form class="pf-card" id="profileForm" novalidate>
+        <div class="pf-summary" id="profileSummary" role="alert" tabindex="-1"></div>
+        <p class="pf-required-note">All fields are required unless marked (optional).</p>
+
+        <fieldset class="pf-fieldset">
+          <legend class="pf-legend">Your name</legend>
+          <p class="pf-legend-hint">Type it as it appears on your ESSU or government ID.</p>
+          <div class="pf-name-grid">
+            <div class="field" id="f-lastName">
+              <label for="pfLastName">Last name</label>
+              <input type="text" id="pfLastName" maxlength="80" autocomplete="family-name" data-hint="">
+              <div class="err" id="pfLastNameErr">Enter your last name.</div>
+            </div>
+            <div class="field" id="f-firstName">
+              <label for="pfFirstName">First name</label>
+              <input type="text" id="pfFirstName" maxlength="80" autocomplete="given-name" data-hint="">
+              <div class="err" id="pfFirstNameErr">Enter your first name.</div>
+            </div>
+            <div class="field" id="f-middleName">
+              <label for="pfMiddleName">Middle name</label>
+              <input type="text" id="pfMiddleName" maxlength="80" autocomplete="additional-name" data-hint="">
+              <div class="err" id="pfMiddleNameErr">Enter your middle name, or tick "No middle name".</div>
+              <label class="check-row pf-no-middle">
+                <input type="checkbox" id="pfNoMiddleName">
+                <span>No middle name</span>
+              </label>
+            </div>
+            <div class="field" id="f-nameExt">
+              <label for="pfNameExt">Extension <span class="field-optional">(optional)</span></label>
+              <input type="text" id="pfNameExt" maxlength="10" list="nameExtList" placeholder="Jr., Sr., III">
+              <datalist id="nameExtList"><option value="Jr."><option value="Sr."><option value="II"><option value="III"><option value="IV"></datalist>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="pf-fieldset">
+          <legend class="pf-legend">How you are requesting</legend>
+          <p class="pf-legend-hint">This decides which services you can request.</p>
+          <div class="pf-fields">
+            <div class="field" id="f-category">
+              <label for="pfCategory">I am requesting as</label>
+              <span class="field-hint" id="pfCategoryHint" aria-live="polite"></span>
+              <select id="pfCategory" data-hint="pfCategoryHint">
+                <option value="">Select one</option>
+                <option value="essu_office">ESSU – Office / Department (head or key official)</option>
+                <option value="essu_employee">ESSU – Employee</option>
+                <option value="essu_student">ESSU – Student</option>
+                <option value="ext_government">Outside ESSU – Government agency</option>
+                <option value="ext_private">Outside ESSU – Private individual or organization</option>
+              </select>
+              <div class="err" id="pfCategoryErr">Choose how you are requesting.</div>
+            </div>
+
+            <p class="pf-more-note" id="pfMoreNote">
+              <img src="img/icons/info-small.svg" alt="" width="18" height="18">
+              <span>After you choose, we ask for your office, college or agency.</span>
+            </p>
+
+            <div class="field" id="f-office" hidden>
+              <label for="pfOffice">Office or college</label>
+              <select id="pfOffice" data-hint="">
+                <option value="">Select one</option>
+                <!-- offices from the Head Attorney's list are added here -->
+                <option value="other">Others (please specify)</option>
+              </select>
+              <div class="err" id="pfOfficeErr">Choose your office, or choose "Others" and type it.</div>
+            </div>
+
+            <div class="field" id="f-officeOther" hidden>
+              <label for="pfOfficeOther">Type your office or college</label>
+              <input type="text" id="pfOfficeOther" maxlength="200" placeholder="e.g. Office of the Registrar" data-hint="">
+              <div class="err" id="pfOfficeOtherErr">Type your office or college.</div>
+            </div>
+
+            <div class="field" id="f-organization" hidden>
+              <label for="pfOrganization">Agency or organization <span class="field-optional" id="orgOptional">(optional)</span></label>
+              <input type="text" id="pfOrganization" maxlength="200" data-hint="">
+              <div class="err" id="pfOrganizationErr">Enter the name of your agency.</div>
+            </div>
+
+            <div class="field" id="f-position">
+              <label for="pfPosition"><span id="pfPositionLabel">Position</span> <span class="field-optional">(optional)</span></label>
+              <input type="text" id="pfPosition" maxlength="150">
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="pf-fieldset" id="consentBlock">
+          <legend class="pf-legend pf-legend-solo">Privacy and consent</legend>
+          <div class="pf-privacy">
+            <ul class="pf-privacy-points">
+              <li><img src="img/icons/privacy-who.svg" alt="" width="20" height="20"><span><b>Who sees it:</b> only authorized Legal Office staff.</span></li>
+              <li><img src="img/icons/privacy-why.svg" alt="" width="20" height="20"><span><b>Why:</b> to verify who you are, act on your requests and keep the office’s official record (RA 10173).</span></li>
+              <li><img src="img/icons/privacy-time.svg" alt="" width="20" height="20"><span><b>How long:</b> as long as ESSU’s records rules and the National Archives’ schedules require.</span></li>
+              <li><img src="img/icons/privacy-email.svg" alt="" width="20" height="20"><span><b>Emails:</b> sign-in codes and updates never contain your concern or your files.</span></li>
+            </ul>
+            <details class="pf-privacy-details">
+              <summary>
+                <img src="img/icons/chevron-right-green.svg" alt="" width="20" height="20">
+                <span class="pf-privacy-name">Data Privacy Notice</span>
+                <span class="pf-privacy-full">· full text</span>
+              </summary>
+              <div class="pf-privacy-text">
+                <p><b>Who collects it.</b> The Legal Office of Eastern Samar State University (ESSU Legal Office) collects
+                your name, category, office or agency, position, email address, and later the details
+                and files of your requests.</p>
+                <p><b>Why.</b> Only to verify who you are, receive and act on your requests, contact you about them, and
+                keep the Legal Office's official record, as allowed under the Data Privacy Act of 2012 (Republic Act No. 10173).</p>
+                <p><b>Where it is kept.</b> In LEXIS, the Legal Office's system. Only authorized Legal Office staff can see
+                your details and requests.</p>
+                <p><b>Sharing.</b> Your information is not shared outside the University, except where needed to act on
+                your request or where the law requires it. Sign-in codes and updates are emailed to you through an
+                email service provider; the emails never contain the description of your concern or your files.</p>
+                <p><b>How long.</b> For as long as ESSU's records rules and the National Archives' disposition schedules require.</p>
+                <p><b>Cookies.</b> Only the cookies needed to keep you signed in. No advertising or tracking cookies
+                (<a href="cookies.html" target="_blank" rel="noopener">Cookies</a>).</p>
+                <p><b>Your rights.</b> You may ask the ESSU Legal Office to let you see, correct, or (subject to
+                record-keeping rules) delete your information, and you may file a complaint with the National Privacy
+                Commission. Contact: <a href="mailto:legaloffice@essu.edu.ph">legaloffice@essu.edu.ph</a>.</p>
+                <p>Full details: <a href="privacy.html" target="_blank" rel="noopener">Privacy Notice</a> (opens in a new tab).</p>
+              </div>
+            </details>
+          </div>
+          <div class="field pf-consent" id="f-consent">
+            <label class="check-row">
+              <input type="checkbox" id="pfConsent" data-hint="">
+              <span>I have read the Data Privacy Notice above and I consent to the ESSU Legal Office collecting and processing my personal information for this purpose.</span>
+            </label>
+            <div class="err" id="pfConsentErr">Please give your consent to continue.</div>
+          </div>
+          <p class="pf-terms">By continuing, you agree to the <a href="terms.html" target="_blank" rel="noopener">Terms of Use</a> (opens in a new tab).</p>
+        </fieldset>
+
+        <div class="pf-footer">
+          <div class="door-notice-slot" id="profileError" role="alert"></div>
+          <div class="pf-actions">
+            <p class="pf-action-note" id="pfActionNote"></p>
+            <div class="pf-action-btns">
+              <button type="button" class="nav-btn btn-secondary" id="pfCancelBtn" hidden>Cancel</button>
+              <button type="submit" class="nav-btn btn-primary" id="pfSaveBtn">
+                <span id="pfSaveLabel">Continue</span>
+                <img id="pfSaveArrow" src="img/icons/arrow-right-white.svg" alt="" width="20" height="20">
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <aside class="pf-aside" aria-labelledby="pfAsideTitle">
+        <h2 class="pf-aside-title" id="pfAsideTitle">What happens next</h2>
+        <ol class="pf-steps" id="pfSteps">
+          <li><span class="pf-step-number">1</span><span><b>Save your details.</b> You only do this once.</span></li>
+          <li><span class="pf-step-number">2</span><span><b>Choose a service</b> and describe what you need.</span></li>
+          <li><span class="pf-step-number">3</span><span><b>The Legal Office verifies your details</b> with your first request. ESSU clients attach a signed endorsement letter once.</span></li>
+        </ol>
+        <p class="pf-aside-note">Requests you already filed keep the details you gave at the time.</p>
+        <p class="pf-aside-email">Questions? Email <a href="mailto:legaloffice@essu.edu.ph">legaloffice@essu.edu.ph</a>.</p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Shown after a code is accepted, while the client's requests load. -->
+  <section id="homeLoadingView" style="display:none;">
+    <div class="my-hero my-hero-loading">
+      <div class="skeleton-bar my-skeleton-kicker"></div>
+      <div class="skeleton-bar my-skeleton-name"></div>
+      <div class="skeleton-bar my-skeleton-details"></div>
+    </div>
+    <div class="my-body my-body-loading">
+      <div class="my-table">
+        <div class="my-skeleton-row"><div class="skeleton-bar"></div><div class="skeleton-bar"></div><div class="skeleton-bar"></div><div class="skeleton-bar"></div></div>
+        <div class="my-skeleton-row"><div class="skeleton-bar"></div><div class="skeleton-bar"></div><div class="skeleton-bar"></div><div class="skeleton-bar"></div></div>
+        <div class="my-skeleton-row"><div class="skeleton-bar"></div><div class="skeleton-bar"></div><div class="skeleton-bar"></div><div class="skeleton-bar"></div></div>
+      </div>
+      <p class="my-loading-text" role="status">Loading your requests…</p>
+    </div>
+  </section>
+
+  <!-- 3. MY REQUESTS.
+       New wording, for Legal Office review: "Start a request" and its line, "Your details can't be
+       changed...", "You can't start a new request yet", the request count, "Open" and "Closed",
+       "Good to know", "Signing out…", and the Verified and Declined lines in js/portal.js. -->
+  <section id="homeView" style="display:none;">
+    <div class="my-hero">
+      <img class="my-symbol" src="img/icons/symbol-folder.svg" alt="" width="240" height="240">
+      <img class="my-symbol-phone" src="img/icons/symbol-folder-phone.svg" alt="" width="96" height="96">
+      <div class="my-who">
+        <p class="my-kicker">My Requests</p>
+        <h1 class="my-name" id="meName" tabindex="-1"></h1>
+        <p class="my-details" id="meMeta"></p>
+        <p class="my-signed-in">Signed in as <b id="meEmail"></b></p>
+        <p class="my-locked" id="meLocked" hidden>Your details can’t be changed while the Legal Office verifies them.</p>
+        <div class="my-actions">
+          <button type="button" class="nav-btn btn-secondary" id="editProfileBtn" hidden>Edit my details</button>
+          <button type="button" class="nav-btn btn-tertiary" id="signOutBtn">Sign out</button>
+        </div>
+      </div>
+      <div class="my-verify" id="verifyBox"></div>
+    </div>
+
+    <div class="my-body">
+      <div class="my-main">
+        <section class="my-section" aria-labelledby="startTitle">
+          <h2 class="my-h2" id="startTitle">Start a request</h2>
+          <div class="my-card my-start">
+            <p class="my-start-intro" id="startIntro"></p>
+            <div class="my-blocked door-notice-slot" id="blockedMsg" role="status" tabindex="-1"></div>
+            <div class="my-start-btns">
+              <a class="nav-btn btn-primary" id="newRequestBtn" href="request-new.html">
+                Request a legal service
+                <img src="img/icons/arrow-right-white.svg" alt="" width="20" height="20">
+              </a>
+              <a class="nav-btn btn-secondary" id="newComplaintBtn" href="request-new.html?door=complaint">
+                File a complaint or referral
+                <img src="img/icons/arrow-right-white.svg" alt="" width="20" height="20">
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="my-section" aria-labelledby="requestsTitle">
+          <div class="my-heading">
+            <h2 class="my-h2" id="requestsTitle">Your requests</h2>
+            <p class="my-count" id="requestCount"></p>
+          </div>
+          <div class="my-list" id="requestList"></div>
+        </section>
+      </div>
+
+      <aside class="my-aside" aria-labelledby="goodToKnow">
+        <h2 class="pf-aside-title" id="goodToKnow">Good to know</h2>
+        <ul class="my-points">
+          <li><img src="img/icons/check-small.svg" alt="" width="20" height="20"><span>Open a request to see its status, documents, history and messages.</span></li>
+          <li><img src="img/icons/check-small.svg" alt="" width="20" height="20"><span>We email you when the status changes or when the Legal Office needs something from you.</span></li>
+          <li><img src="img/icons/check-small.svg" alt="" width="20" height="20"><span>Each request keeps the details you gave when you filed it.</span></li>
+        </ul>
+        <p class="my-aside-contact">Questions? Email <a href="mailto:legaloffice@essu.edu.ph">legaloffice@essu.edu.ph</a>.</p>
+      </aside>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+
+<script src="js/components.js"></script>
+<script src="js/site-page.js" data-nav="portal"></script>
+<script src="js/api-config.js"></script>
+<script src="js/site-search.js"></script>
+<script type="module" src="js/vendor/altcha/altcha.min.js"></script>
+<script src="js/portal.js"></script>
+</body>
+</html>

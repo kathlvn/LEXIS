@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Request — The Legal Office, ESSU</title>
+<link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+
+<header class="site-header" id="siteHeader"></header>
+
+<!-- New request and complaint. js/request-new.js fills this page.
+     New wording, for Legal Office review: the kickers, the required-fields line, "Before you can
+     submit" and its count, the status beside Submit, "Files removed", "What you can do", "What
+     happens next" and its steps, "Keep this ID...", "Copy Request ID", the error titles, the note
+     for students, and the contact line when complaints can't be filed online. -->
+<main>
+
+  <section class="rn-hero">
+    <img class="rn-symbol" id="rnSymbol" src="img/icons/symbol-document-pen.svg" alt="" width="320" height="320">
+    <img class="rn-symbol-phone" id="rnSymbolPhone" src="img/icons/symbol-document-pen-phone.svg" alt="" width="104" height="104">
+    <a class="text-link text-link-on-dark rn-back" href="portal.html">&lsaquo; My Requests</a>
+
+    <div class="rn-hero-loading" id="rnHeroLoading" aria-hidden="true">
+      <div class="skeleton-bar rn-skeleton-kicker"></div>
+      <div class="skeleton-bar rn-skeleton-title"></div>
+      <div class="skeleton-bar rn-skeleton-lede"></div>
+    </div>
+
+    <div class="rn-hero-text" id="rnHeroText" hidden>
+      <p class="rn-kicker" id="rnKicker"></p>
+      <h1 class="rn-title" id="rnTitle" tabindex="-1"></h1>
+      <p class="rn-lede" id="rnLede" hidden></p>
+      <p class="rn-who" id="rnWho" hidden></p>
+    </div>
+  </section>
+
+  <!-- 1. While /portal/me and /portal/services load -->
+  <div class="my-body rn-view" id="loadingView">
+    <div class="rn-col">
+      <div class="skeleton-card rn-skeleton-card" aria-hidden="true">
+        <div class="skeleton-bar rn-skeleton-a"></div>
+        <div class="skeleton-bar rn-skeleton-b"></div>
+        <div class="skeleton-bar rn-skeleton-c"></div>
+      </div>
+      <div class="skeleton-card rn-skeleton-card" aria-hidden="true">
+        <div class="skeleton-bar rn-skeleton-a"></div>
+        <div class="skeleton-bar rn-skeleton-b"></div>
+        <div class="skeleton-bar rn-skeleton-c"></div>
+      </div>
+      <p class="rn-note" role="status">Loading the form…</p>
+    </div>
+  </div>
+
+  <!-- 2. Instead of the form: it could not load, or this client can't submit right now -->
+  <div class="my-body rn-view" id="blockedView" hidden>
+    <div class="rn-col">
+      <div id="blockedNotice"></div>
+      <p class="rn-body-text" id="blockedContact" hidden>Email <a href="mailto:legaloffice@essu.edu.ph">legaloffice@essu.edu.ph</a> or visit the Legal Office, College of Law Building, Monday to Friday, 8:00 AM to 5:00 PM.</p>
+      <section class="rn-info-card" id="blockedHelp" hidden>
+        <h2 class="rn-h3">What you can do</h2>
+        <ul class="rn-tick-list">
+          <li><img src="img/icons/check-small.svg" alt="" width="20" height="20"><span>Open your current request on My Requests to see its status or send the Legal Office a message.</span></li>
+          <li><img src="img/icons/check-small.svg" alt="" width="20" height="20"><span>Once the Legal Office verifies your details, you can have more than one request open at a time.</span></li>
+          <li><img src="img/icons/check-small.svg" alt="" width="20" height="20"><span>Questions? Email <a href="mailto:legaloffice@essu.edu.ph">legaloffice@essu.edu.ph</a>.</span></li>
+        </ul>
+      </section>
+      <div class="rn-btn-row">
+        <button type="button" class="nav-btn btn-primary" id="blockedRetry" hidden>Try again</button>
+        <a class="nav-btn btn-primary" id="blockedBack" href="portal.html">Back to My Requests</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. The form -->
+  <div class="my-body rn-view" id="formView" hidden>
+    <div class="rn-col">
+      <div class="pf-summary" id="rnSummary" role="alert" tabindex="-1"></div>
+      <p class="rn-note">All fields are required unless marked (optional). Each document shows whether it is required.</p>
+
+      <!-- Complaint door with one service: nothing to choose, so it is a plain card. -->
+      <section class="rn-card rn-filing" id="filingCard" hidden>
+        <div class="rn-filing-top">
+          <span class="rn-filing-icon"><img src="img/icons/complaint-sage.svg" alt="" width="28" height="28"></span>
+          <div class="rn-filing-text">
+            <p class="rn-step-label">Type of filing</p>
+            <h2 class="rn-h3" id="filingName"></h2>
+            <p class="rn-filing-desc" id="filingDesc"></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- The service -->
+      <section class="rn-card" id="stepService">
+        <div class="rn-step">
+          <span class="rn-step-num" aria-hidden="true"><span class="rn-step-digit"></span><img src="img/icons/check-white.svg" alt="" width="24" height="24"></span>
+          <div class="rn-step-text">
+            <p class="rn-step-label"></p>
+            <h2 class="rn-step-title" id="serviceHeading">Choose the service</h2>
+            <p class="rn-note" id="serviceHint" hidden>Pick the one that fits your concern. If none fits, choose Other Legal Concerns.</p>
+          </div>
+        </div>
+
+        <div class="rn-followup" id="followupBlock" hidden>
+          <div class="rn-radio-row">
+            <label class="rn-radio"><input class="rn-radio-input" type="radio" name="reqType" value="new" checked> <span>A new request</span></label>
+            <label class="rn-radio"><input class="rn-radio-input" type="radio" name="reqType" value="followup"> <span>A follow-up of one of my ongoing requests</span></label>
+          </div>
+          <div class="field" id="f-followup" hidden>
+            <label for="followupSelect">Which request does this follow up?</label>
+            <span class="field-hint" id="followupHint">A follow-up uses the same service as the request it follows. To simply ask a question, open the request and use its messages instead.</span>
+            <select id="followupSelect" data-hint="followupHint"><option value="">Select one</option></select>
+            <div class="err" id="followupErr">Choose the request you are following up.</div>
+          </div>
+        </div>
+
+        <div class="rn-group" id="f-service">
+          <div class="rn-services" id="serviceList" role="radiogroup" aria-labelledby="serviceHeading"></div>
+          <p class="rn-note" id="studentNote" hidden>Students can request Legal Research online. For anything else, contact the Legal Office.</p>
+          <div class="err" id="serviceErr">Choose a service.</div>
+        </div>
+      </section>
+
+      <!-- The details -->
+      <section class="rn-card" id="stepDetails">
+        <div class="rn-step">
+          <span class="rn-step-num" aria-hidden="true"><span class="rn-step-digit"></span><img src="img/icons/check-white.svg" alt="" width="24" height="24"></span>
+          <div class="rn-step-text">
+            <p class="rn-step-label"></p>
+            <h2 class="rn-step-title">Tell us about it</h2>
+          </div>
+        </div>
+        <div class="field" id="f-desc">
+          <label for="desc" id="descLabel">Describe your request</label>
+          <span class="field-hint" id="descHint">Say what you need from the Legal Office and give the facts that matter: who is involved, what happened, and the important dates.</span>
+          <textarea id="desc" maxlength="5000" rows="4" data-hint="descHint"></textarea>
+          <div class="rn-counter"><span id="descCount">0</span> / 5000</div>
+          <div class="err" id="descErr">Describe your concern.</div>
+        </div>
+      </section>
+
+      <!-- The documents -->
+      <section class="rn-card" id="stepDocs">
+        <div class="rn-step">
+          <span class="rn-step-num" aria-hidden="true"><span class="rn-step-digit"></span><img src="img/icons/check-white.svg" alt="" width="24" height="24"></span>
+          <div class="rn-step-text">
+            <p class="rn-step-label"></p>
+            <h2 class="rn-step-title">Documents</h2>
+            <p class="rn-note">PDF, Word (DOC, DOCX), JPG or PNG. Up to 20 MB per file and 50 MB in all.</p>
+          </div>
+        </div>
+
+        <div class="rn-docs" id="endorsementBlock" hidden>
+          <h3 class="rn-h3">Endorsement letter</h3>
+          <p class="rn-body-text">Because this is your first request, attach a letter from your office head (or your dean, for students) confirming that you belong to that office or college. It must be <b>signed</b>. You will not be asked for it again once the Legal Office verifies it.</p>
+          <div class="rn-template" id="templateRow">
+            <button type="button" class="rn-template-btn" id="templateBtn"><img src="img/icons/document-green-small.svg" alt="" width="20" height="20"><span>Download a letter template</span></button>
+            <span class="rn-note">(a text file you can copy into your office's letterhead)</span>
+          </div>
+          <div class="rn-slots" id="endorsementSlot"></div>
+        </div>
+
+        <div class="rn-docs" id="checklistBlock">
+          <h3 class="rn-h3" id="checklistHeading">Documents</h3>
+          <div id="filesRemoved" aria-live="polite"></div>
+          <p class="rn-body-text rn-muted" id="checklistEmpty" hidden></p>
+          <div class="rn-slots" id="checklistSlots"></div>
+        </div>
+
+        <div class="rn-docs">
+          <div class="rn-h3-row">
+            <h3 class="rn-h3">Other files</h3>
+            <span class="rn-tag rn-tag-optional">Optional</span>
+          </div>
+          <p class="rn-body-text">Anything else that helps explain your concern.</p>
+          <div class="rn-extra-list" id="extraList"></div>
+          <div class="rn-add-files">
+            <label class="nav-btn btn-secondary">Add files <img src="img/icons/upload-green.svg" alt="" width="20" height="20">
+              <input type="file" id="extraInput" class="rn-hidden-input" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"></label>
+          </div>
+          <div class="rn-file-errors" id="fileError" role="alert"></div>
+          <p class="rn-note" id="fileTotal" hidden></p>
+        </div>
+      </section>
+
+      <!-- Confirm and submit -->
+      <section class="rn-card" id="stepConfirm">
+        <div class="rn-step">
+          <span class="rn-step-num" aria-hidden="true"><span class="rn-step-digit"></span><img src="img/icons/check-white.svg" alt="" width="24" height="24"></span>
+          <div class="rn-step-text">
+            <p class="rn-step-label"></p>
+            <h2 class="rn-step-title">Confirm and submit</h2>
+          </div>
+        </div>
+        <div class="field rn-attest" id="f-attest">
+          <label class="check-row">
+            <input type="checkbox" id="attest">
+            <span>I certify that the information I gave is true and correct. I understand that false statements may lead to administrative or legal action.</span>
+          </label>
+          <div class="err" id="attestErr">Tick the statement that your information is true and correct.</div>
+        </div>
+
+        <!-- Too narrow for the side box: the same list sits here, above Submit. -->
+        <div class="rn-check-box rn-check-inline" data-checklist></div>
+
+        <div id="submitError" role="alert"></div>
+        <div class="rn-actions">
+          <button type="button" class="nav-btn btn-primary" id="submitBtn"><span id="submitLabel">Submit</span><img id="submitArrow" src="img/icons/arrow-right-white.svg" alt="" width="20" height="20"></button>
+          <a class="nav-btn btn-tertiary" id="cancelBtn" href="portal.html">Cancel</a>
+          <p class="rn-status" id="rnStatus" role="status"></p>
+        </div>
+      </section>
+    </div>
+
+    <aside class="rn-aside" aria-label="What is still needed">
+      <div class="rn-check-box" data-checklist></div>
+      <p class="rn-note">Questions? Email <a href="mailto:legaloffice@essu.edu.ph">legaloffice@essu.edu.ph</a>.</p>
+    </aside>
+  </div>
+
+  <!-- 4. Done -->
+  <div class="my-body rn-view" id="doneView" hidden>
+    <div class="rn-col">
+      <section class="rn-id-card">
+        <p class="rn-id-label">Request ID</p>
+        <div class="rn-id-row">
+          <p class="rn-id" id="doneId"></p>
+          <button type="button" class="nav-btn btn-tertiary" id="copyBtn"><span id="copyLabel" aria-live="polite">Copy Request ID</span></button>
+        </div>
+        <p class="rn-note">Keep this ID. Give it when you call, email or visit the Legal Office about this request.</p>
+      </section>
+      <div id="doneVerify" hidden>
+        <div class="notice notice-info">
+          <img src="img/icons/info.svg" alt="" width="24" height="24">
+          <div>
+            <p class="notice-title">We will check your endorsement letter</p>
+            <p class="notice-message">The Legal Office will check your endorsement letter. You will see "Verified" on My Requests once it is done.</p>
+          </div>
+        </div>
+      </div>
+      <div class="rn-btn-row">
+        <a class="nav-btn btn-primary" id="doneViewBtn" href="portal.html">View this request <img src="img/icons/arrow-right-white.svg" alt="" width="20" height="20"></a>
+        <a class="nav-btn btn-secondary" href="portal.html">Back to My Requests</a>
+      </div>
+    </div>
+
+    <aside class="rn-next-box" aria-labelledby="nextTitle">
+      <h2 class="rn-h3" id="nextTitle">What happens next</h2>
+      <ol class="rn-next" id="nextSteps"></ol>
+      <p class="rn-note" id="nextNote" hidden></p>
+      <p class="rn-note">Questions? Email <a href="mailto:legaloffice@essu.edu.ph">legaloffice@essu.edu.ph</a>.</p>
+    </aside>
+  </div>
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+
+<script src="js/components.js"></script>
+<script src="js/site-page.js" data-nav="portal"></script>
+<script src="js/api-config.js"></script>
+<script src="js/site-search.js"></script>
+<script src="js/request-new.js"></script>
+</body>
+</html>

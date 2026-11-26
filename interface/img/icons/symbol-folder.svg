@@ -1,0 +1,7 @@
+<svg width="240" height="240" viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g opacity="0.2">
+<path d="M30 70C30 64.6957 32.1071 59.6086 35.8579 55.8579C39.6086 52.1071 44.6957 50 50 50H90L110 70H190C195.304 70 200.391 72.1071 204.142 75.8579C207.893 79.6086 210 84.6957 210 90V170C210 175.304 207.893 180.391 204.142 184.142C200.391 187.893 195.304 190 190 190H50C44.6957 190 39.6086 187.893 35.8579 184.142C32.1071 180.391 30 175.304 30 170V70Z" stroke="#B8622C" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M30 100H210" stroke="#B8622C" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M80 140H160" stroke="#B8622C" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</svg>

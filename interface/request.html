@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Request Details - The Legal Office, ESSU</title>
+<link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+
+<header class="site-header" id="siteHeader"></header>
+
+<!-- One request. js/request.js fills this page.
+     New wording, for Legal Office review: "Where your request is", "Step n of m", "See all n steps",
+     "(now)", the "usually acted on... Expected by" line and the "no set period" lines, "Details" and
+     "Keep a copy", "Questions? Email...", "Loading your request...", "Try again", the notice titles
+     ("The Legal Office needs something from you", "The Legal Office is waiting for you", "A document
+     needs revision", "Could not load your request"), "Upload a document", "Reply in Messages",
+     "Revision requested", "Upload revised copy", "Version n", "Replaced by version n",
+     "Uploaded" and "Added" with a date, the upload status lines, "Your message",
+     "Legal Office" and "You" on messages, "Your answers were not sent", "Choose an answer." -->
+<main>
+
+  <section class="rd-hero">
+    <img class="rd-symbol" src="img/icons/symbol-document-search.svg" alt="" width="220" height="220">
+    <img class="rd-symbol-phone" src="img/icons/symbol-document-search-phone.svg" alt="" width="96" height="96">
+    <a class="text-link rd-back" id="rdBack" href="portal.html">&lsaquo; My Requests</a>
+
+    <div class="rd-loading" id="rdLoading">
+      <div class="skeleton-bar rd-skeleton-kicker" aria-hidden="true"></div>
+      <div class="skeleton-bar rd-skeleton-id" aria-hidden="true"></div>
+      <div class="skeleton-bar rd-skeleton-meta" aria-hidden="true"></div>
+      <div class="skeleton-bar rd-skeleton-steps" aria-hidden="true"></div>
+      <div class="skeleton-bar rd-skeleton-box" aria-hidden="true"></div>
+      <p class="rn-note" role="status">Loading your request&hellip;</p>
+    </div>
+
+    <div class="rd-load-error" id="lookupError" hidden>
+      <div id="lookupErrorNotice" role="alert"></div>
+      <div class="rd-actions">
+        <button type="button" class="nav-btn btn-primary" id="retryBtn">Try again</button>
+        <a class="nav-btn btn-tertiary" href="portal.html">&lsaquo; My Requests</a>
+      </div>
+    </div>
+
+    <div class="rd-hero-text" id="rdHeroText" hidden>
+      <h1 class="rd-title" id="rdTitle" tabindex="-1">
+        <span class="rd-kicker">Request Details<span class="visually-hidden">, </span></span>
+        <span class="rd-id" id="trackReqId"></span>
+      </h1>
+      <div class="rd-meta">
+        <span id="statusBadge"></span>
+        <span class="rd-meta-text" id="rdMetaText"></span>
+      </div>
+    </div>
+
+    <div class="rd-progress" id="rdProgress" hidden>
+      <div class="rd-progress-head">
+        <h2 class="rn-h3">Where your request is</h2>
+        <span class="rn-note" id="rdStepCount"></span>
+      </div>
+      <ol class="rd-steps" id="timeline"></ol>
+      <div class="rd-bar" id="rdBar" aria-hidden="true"></div>
+      <div id="rdStatusBox"></div>
+      <details class="rd-all-steps" id="rdAllSteps">
+        <summary>
+          <span id="rdAllStepsLabel"></span>
+          <img src="img/icons/chevron-down-green.svg" alt="" width="20" height="20">
+        </summary>
+        <ol class="rd-steps-list" id="rdStepsList"></ol>
+      </details>
+    </div>
+  </section>
+
+  <div class="my-body rd-body" id="resultsWrap" hidden>
+    <div class="rd-main">
+
+      <div class="rd-needs" id="docsAlert" hidden>
+        <div class="rd-needs-notices" id="docsAlertNotices"></div>
+        <div class="rd-jump-links" id="rdJumpLinks">
+          <a class="text-link" id="jumpUpload" href="#uploadBoxTrack">Upload a document <img src="img/icons/arrow-right-green.svg" alt="" width="20" height="20"></a>
+          <a class="text-link" id="jumpMessages" href="#clientConvInput">Reply in Messages <img src="img/icons/arrow-right-green.svg" alt="" width="20" height="20"></a>
+        </div>
+      </div>
+
+      <!-- Client Satisfaction Measurement: only once the request is
+           Completed. The questions come from the office's survey file (js/request.js). -->
+      <section class="rd-card csm-wrap" id="csmWrap" hidden aria-labelledby="csmTitle">
+        <h2 class="rd-card-title" id="csmTitle">How did we do?</h2>
+        <div class="csm-body" id="csmBody"></div>
+      </section>
+
+      <section class="rd-card rd-docs" aria-labelledby="docsTitle">
+        <h2 class="rd-card-title" id="docsTitle">Your Documents</h2>
+        <div id="docChipGrid"></div>
+        <p class="rn-body-text rn-muted" id="uploadClosedHint" hidden>This request is closed, so it no longer accepts documents.</p>
+        <div class="rd-upload-wrap" id="uploadWrap">
+          <div class="rd-upload" id="uploadBoxTrack">
+            <img src="img/icons/upload-green-large.svg" alt="" width="28" height="28">
+            <p class="rd-upload-title">Choose a file or drag &amp; drop it here</p>
+            <p class="rn-note">You may upload multiple files</p>
+            <button type="button" class="nav-btn btn-secondary" id="uploadBtnTrack">
+              Upload <img src="img/icons/upload-green.svg" alt="" width="20" height="20">
+            </button>
+            <input type="file" id="fileInputTrack" multiple hidden>
+          </div>
+          <p class="err" id="uploadError" role="alert"></p>
+          <p class="rn-note rd-upload-status" id="uploadStatus" role="status"></p>
+        </div>
+
+        <!-- Documents the Legal Office has released to the requester -->
+        <div class="rd-office-docs">
+          <h3 class="rn-h3">From the Legal Office</h3>
+          <div id="officeDocGrid"></div>
+        </div>
+      </section>
+
+      <section class="rd-card rd-messages" aria-labelledby="messagesTitle">
+        <h2 class="rd-card-title" id="messagesTitle">Messages</h2>
+        <div class="rd-conversation" id="clientConvMessages" aria-live="polite"></div>
+        <div class="rd-message-form" id="clientConvInputRow">
+          <div class="field" id="f-message">
+            <label for="clientConvInput">Your message</label>
+            <input type="text" id="clientConvInput" maxlength="5000" placeholder="Type your message here..." aria-describedby="msgError">
+            <p class="err" id="msgError" role="alert"></p>
+          </div>
+          <div class="rd-msg-attach">
+            <p class="rn-note" id="msgFilesHint">You can attach up to 5 files (PDF, Word, JPG or PNG; 20 MB each). They are also added to Your Documents.</p>
+            <ul class="rd-msg-files" id="msgFiles" aria-label="Files to send"></ul>
+            <p class="err" id="msgFileError" role="alert"></p>
+          </div>
+          <div class="rd-message-actions">
+            <button type="button" class="nav-btn btn-secondary" id="msgAttachBtn" aria-describedby="msgFilesHint">
+              <img src="img/icons/paperclip-green.svg" alt="" width="20" height="20"> Attach files
+            </button>
+            <input type="file" id="msgFileInput" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" hidden>
+            <button type="button" class="nav-btn btn-primary" id="clientConvSendBtn">
+              Send <img src="img/icons/arrow-right-white.svg" alt="" width="20" height="20">
+            </button>
+          </div>
+          <p class="rn-note" id="msgStatus" role="status"></p>
+        </div>
+        <p class="rn-body-text rn-muted" id="msgClosedHint" hidden>This request is closed, so it no longer accepts messages. If you still need help, please submit a new request.</p>
+      </section>
+
+      <section class="rd-card rd-history" aria-labelledby="historyTitle">
+        <h2 class="rd-card-title" id="historyTitle">History</h2>
+        <ul class="rd-history-list" id="historyList"></ul>
+      </section>
+
+      <!-- Withdraw: only while the request is not yet Approved -->
+      <section class="rd-card rd-withdraw" id="withdrawWrap" hidden>
+        <div class="rd-withdraw-row" id="withdrawRow">
+          <div class="rd-withdraw-text">
+            <h2 class="rn-h3">No longer need this request?</h2>
+            <p class="rn-body-text rn-muted">You can withdraw it until the Legal Office approves it. The Legal Office will be able to see that you withdrew it.</p>
+          </div>
+          <button type="button" class="nav-btn btn-secondary" id="withdrawOpenBtn">Withdraw request</button>
+        </div>
+        <div class="rd-withdraw-panel" id="withdrawPanel" hidden>
+          <h2 class="rn-h3">No longer need this request?</h2>
+          <div class="field">
+            <label for="withdrawReason">Reason <span class="field-optional">(optional)</span></label>
+            <textarea id="withdrawReason" maxlength="500" rows="4" placeholder="e.g. The matter has been resolved."></textarea>
+            <p class="rd-char-count" id="withdrawCount">0 / 500</p>
+          </div>
+          <p class="rn-body-text rd-confirm-line" id="withdrawConfirmLine"></p>
+          <div class="rd-actions">
+            <button type="button" class="nav-btn btn-primary" id="withdrawConfirmBtn">Withdraw my request</button>
+            <button type="button" class="nav-btn btn-secondary" id="withdrawCancelBtn">Keep my request</button>
+          </div>
+          <p class="err" id="withdrawMsg" role="alert"></p>
+        </div>
+      </section>
+    </div>
+
+    <div class="rd-aside">
+      <section class="rd-details">
+        <div class="rd-facts">
+          <h2 class="rn-h3">Details</h2>
+          <dl class="rd-facts-list">
+            <div><dt>Request ID</dt><dd id="sumReqId"></dd></div>
+            <div><dt>Service Requested</dt><dd id="sumService"></dd></div>
+            <div><dt>Date Submitted</dt><dd id="sumDate"></dd></div>
+            <div><dt>Current Status</dt><dd id="sumStatus"></dd></div>
+            <div><dt>Handled By</dt><dd id="sumOfficer"></dd></div>
+          </dl>
+        </div>
+        <div class="rd-copy">
+          <h2 class="rd-copy-title">Keep a copy</h2>
+          <div class="rd-copy-actions">
+            <button type="button" class="nav-btn btn-tertiary" id="downloadBtn">Download Submitted Request</button>
+            <button type="button" class="nav-btn btn-tertiary" id="printBtn">Print Request Details</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="rd-next" id="whatsNext">
+        <h2 class="rn-h3">What's next?</h2>
+        <ul>
+          <li>The Legal Office reviews your request and will message you here if anything is missing.</li>
+          <li>If they ask for a document, upload it under Documents above.</li>
+          <li>We email you when the status changes. You can also check this page any time.</li>
+        </ul>
+      </section>
+
+      <p class="rn-note rd-help">Questions? Email <a href="mailto:legaloffice@essu.edu.ph">legaloffice@essu.edu.ph</a>.</p>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+
+<script src="js/components.js"></script>
+<script src="js/site-page.js" data-nav="portal"></script>
+<script src="js/api-config.js"></script>
+<script src="js/site-search.js"></script>
+<script src="js/image-preview.js"></script>
+<script src="js/request.js"></script>
+</body>
+</html>

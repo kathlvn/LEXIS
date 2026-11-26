@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offices — The Legal Office Staff Console</title>
+<link rel="stylesheet" href="css/internal.css">
+<style>html{visibility:hidden;}</style>
+</head>
+<body>
+
+<header class="app-topbar" id="appTopbar"></header>
+
+<div class="app-shell">
+  <nav class="app-sidebar" id="appSidebar"></nav>
+
+  <main class="app-main">
+    <div class="breadcrumb-row" id="breadcrumbRow"></div>
+
+    <p class="holiday-intro">
+      ESSU offices and colleges that clients choose from on My Requests. Offices are never deleted:
+      rename one, or switch it off to hide it from the client form. Clients already linked to it, and requests
+      already submitted, are not affected.
+    </p>
+
+    <div class="office-page-msg" id="officePageMsg" role="status"></div>
+
+    <!-- 1. Typed by clients -->
+    <section class="staff-form-card" id="typedCard">
+      <h2>Typed by clients <span class="office-count" id="typedCount"></span></h2>
+      <p class="office-hint">What ESSU clients wrote under "Others (please specify)". Check the spelling, then
+        <b>Add to list</b>: those clients are linked to the office in one step. If an office with the same name is
+        already on the list, they are linked to that one.</p>
+      <div class="table-wrap">
+        <table class="data-table office-table" id="typedTable">
+          <thead><tr><th>Office as it will be listed</th><th>Type</th><th>Clients</th><th></th></tr></thead>
+        </table>
+      </div>
+    </section>
+
+    <!-- 2. Add an office -->
+    <section class="staff-form-card">
+      <h2>Add an office or college</h2>
+      <form id="officeForm" class="office-add-form" novalidate>
+        <div class="staff-form-field office-name-field">
+          <label for="officeName">Name</label>
+          <input type="text" id="officeName" maxlength="200" placeholder="e.g. Office of the Registrar" required>
+        </div>
+        <div class="staff-form-field">
+          <label for="officeType">Type</label>
+          <select id="officeType">
+            <option value="office">Office</option>
+            <option value="college">College</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary" id="officeAddBtn">Add</button>
+      </form>
+      <div class="staff-form-error" id="officeFormMsg" role="alert"></div>
+    </section>
+
+    <!-- 3. The list -->
+    <section>
+      <div class="table-wrap">
+        <table class="data-table office-table" id="officeTable">
+          <thead><tr><th>Name</th><th>Type</th><th>Clients</th><th>Status</th><th></th></tr></thead>
+        </table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="js/api-config.js"></script>
+<script src="js/auth-guard.js"></script>
+<script src="js/api-data.js"></script>
+<script src="js/render-helper.js"></script>
+<script src="js/components.js"></script>
+<script src="js/offices.js"></script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+# Secrets and local settings (backend/.env.example is the safe template)
+.env
+**/.env
+*drive-key*.json
+
+# Python environments and caches
+venv/
+.venv/
+.venv-1/
+backend/venv/
+backend/.venv/
+**/__pycache__/
+*.pyc
+
+# Uploaded files (client documents)
+**/storage/
+
+# Database migrations, run by hand on each machine
+batch-*-migration.sql
+
+# Personal notes, AI-assistant and editor files, internal review reports
+notes.txt
+CLAUDE.md
+.claude/
+claude/
+.impeccable/
+.vscode/
+qa-report.md
+design-audit-staff.md

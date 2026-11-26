@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Legal Office — Eastern Samar State University</title>
+<link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+
+<header class="site-header" id="siteHeader"></header>
+
+<main class="home-main">
+  <section class="home-hero">
+    <div class="home-hero-text">
+      <h1>The Legal Office</h1>
+      <p class="home-hero-lede">
+        The Legal Office of Eastern Samar State University provides legal advice, legal research, review of agreements
+        and contracts, investigations, and the drafting of legal documents for the University's offices and officials.
+      </p>
+      <!-- "Search the site" on desktop; on phones the full wording moves to the label. -->
+      <form class="search-form" role="search" action="search.html" method="get" data-site-search>
+        <label class="search-label" for="homeSearchInput">
+          <span class="search-label-desktop">Search the site</span>
+          <span class="search-label-phone">Search services, guidelines, or request types</span>
+        </label>
+        <div class="search-box">
+          <img src="img/icons/search-field.svg" alt="">
+          <input type="search" id="homeSearchInput" name="q" maxlength="100"
+            data-placeholder-desktop="Search services, guidelines, or request types…"
+            data-placeholder-phone="e.g. contract review">
+          <button class="search-submit" type="submit">Search</button>
+        </div>
+      </form>
+      <div class="home-hero-actions">
+        <a class="nav-btn btn-on-dark" href="portal.html">Request a Legal Service <img src="img/icons/arrow-right-green.svg" alt=""></a>
+        <a class="text-link text-link-on-dark" href="portal.html?door=complaint">File a Complaint or Referral <img src="img/icons/arrow-right-cream.svg" alt=""></a>
+      </div>
+    </div>
+
+    <!-- Who may request: this copy shows on desktop, the copy in the next section on phones.
+         CSS hides one of them completely, so a screen reader hears it once. Keep the two texts the same. -->
+    <aside class="who-card who-card-hero">
+      <h2>Who may request</h2>
+      <p><b>Legal services</b> are for ESSU offices, personnel, and officials, upon a formal written request of the
+        office or department head or key official (Citizen's Charter). Students may request legal research.
+        <b>Complaints and referrals</b> may be filed by anyone, including persons and agencies outside ESSU.
+        Legal Office services are free of charge.</p>
+    </aside>
+  </section>
+
+  <section class="home-band">
+    <aside class="who-card who-card-phone">
+      <h2>Who may request</h2>
+      <p><b>Legal services</b> are for ESSU offices, personnel, and officials, upon a formal written request of the
+        office or department head or key official (Citizen's Charter). Students may request legal research.
+        <b>Complaints and referrals</b> may be filed by anyone, including persons and agencies outside ESSU.
+        Legal Office services are free of charge.</p>
+    </aside>
+
+    <h2 class="band-title">How to request a legal service</h2>
+    <ol class="home-step-list">
+      <li>
+        <span class="accent-square accent-teal"><img src="img/icons/sign-in.svg" alt=""></span>
+        <p><b>1. Sign in.</b> Open <a href="portal.html">My Requests</a> and enter your email address, then the one-time code we send you. The first time, tell us who you are. No email address? Visit the Legal Office and staff will file your request for you.</p>
+      </li>
+      <li>
+        <span class="accent-square accent-terracotta"><img src="img/icons/describe.svg" alt=""></span>
+        <p><b>2. Describe your request.</b> Choose the service and describe your concern.</p>
+      </li>
+      <li>
+        <span class="accent-square accent-plum"><img src="img/icons/upload.svg" alt=""></span>
+        <p><b>3. Upload your documents.</b> The page lists the documents each service requires; all required documents must be included. ESSU clients include, once, a signed endorsement letter from their office head (or dean, for students).</p>
+      </li>
+      <li>
+        <span class="accent-square accent-gold"><img src="img/icons/track.svg" alt=""></span>
+        <p><b>4. Follow your request.</b> In My Requests you can see the status, download documents released to you, and message the Legal Office.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section class="home-band home-band-tint" id="services">
+    <div class="band-heading">
+      <h2 class="band-title">Services offered</h2>
+      <p class="band-note">Processing periods are counted in working days, from the next working day after your request is submitted. Weekends and holidays are not counted.</p>
+    </div>
+    <p class="visually-hidden" id="homeServicesStatus" role="status"></p>
+    <div class="service-grid" id="homeServices"></div>
+  </section>
+
+  <!-- Short version of about.html (mission from the Office Operations Manual); full details stay there. -->
+  <section class="home-band home-about" id="about">
+    <h2 class="band-title">About the Legal Office</h2>
+    <div class="home-about-text">
+      <p class="home-about-mission"><b>Mission:</b> to provide responsive, quality legal services that ensure compliance with the law and enable
+        ESSU to carry out its mandate with confidence in its rights, privileges, and protections.</p>
+      <p class="home-about-note">Established in January 2024, the Legal Office is under the Office of the University President and is
+        headed by the Attorney IV.</p>
+      <a class="text-link" href="about.html">Learn more about the Legal Office &rsaquo;</a>
+    </div>
+  </section>
+
+  <!-- Placeholder cards until the articles load. The whole section is removed if none
+       are published or the server can't be reached (js/home.js). -->
+  <section class="home-band home-band-tint home-articles" id="articles">
+    <h2 class="band-title">News and articles</h2>
+    <p class="visually-hidden" id="homeArticlesStatus" role="status"></p>
+    <div class="article-cards" id="homeArticles"></div>
+    <a class="text-link home-articles-all" id="homeArticlesAll" href="articles.html" hidden>See all articles &rsaquo;</a>
+  </section>
+
+  <section class="home-band home-contact" id="contact">
+    <h2 class="band-title">Contact</h2>
+
+    <div class="location-card">
+      <img class="building-photo" src="img/col-bldg.jpg" alt="The College of Law Building, ESSU Main Campus, home of the Legal Office" width="1007" height="755" loading="lazy">
+      <div class="location-body">
+        <img src="img/icons/location.svg" alt="">
+        <div class="contact-item">
+          <div class="contact-label">Office</div>
+          <div>College of Law Building, ESSU Main Campus, Borongan City, Eastern Samar, Philippines 6800</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-details">
+      <div class="contact-item">
+        <div class="contact-label">Email</div>
+        <div><a class="text-link" href="mailto:legaloffice@essu.edu.ph">legaloffice@essu.edu.ph</a></div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-label">Office hours</div>
+        <div id="homeHours">Monday to Friday, 8:00 AM to 5:00 PM, except holidays</div>
+      </div>
+      <p class="contact-note">For questions about a request you already submitted, open the request in My Requests and use its Messages section, so the conversation stays with your request.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+
+<script src="js/components.js"></script>
+<script src="js/site-page.js" data-nav="home"></script>
+<script src="js/api-config.js"></script>
+<script src="js/site-search.js"></script>
+<script src="js/article-format.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

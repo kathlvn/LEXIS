@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — The Legal Office Staff Console</title>
+<link rel="stylesheet" href="css/internal.css">
+<style>html{visibility:hidden;}</style>
+</head>
+<body>
+
+<header class="app-topbar" id="appTopbar"></header>
+
+<div class="app-shell">
+  <nav class="app-sidebar" id="appSidebar"></nav>
+
+  <main class="app-main">
+    <div class="breadcrumb-row" id="breadcrumbRow"></div>
+
+    <!-- Count tiles: drawn by js/dashboard.js for the signed-in role -->
+    <p class="table-state error dash-msg" id="dashMsg" hidden></p>
+    <div class="dash-tiles" id="dashTiles"></div>
+
+    <!-- Recent requests: filters for the Head Attorney only; drawn by js/dashboard.js -->
+    <section class="dash-recent" aria-labelledby="dashRecentTitle">
+      <div class="dash-recent-head">
+        <h2 class="dash-recent-title" id="dashRecentTitle">Recent requests</h2>
+        <div class="list-toolbar dash-filters" id="dashFilters" hidden></div>
+        <a class="dash-see-all" id="dashSeeAll" href="requests-all.html">See all requests<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table queue-table" id="dashRecentTable"><thead></thead></table>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script src="js/api-config.js"></script>
+<script src="js/auth-guard.js"></script>
+<script src="js/api-data.js"></script>
+<script src="js/render-helper.js"></script>
+<script src="js/components.js"></script>
+<script src="js/request-list.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

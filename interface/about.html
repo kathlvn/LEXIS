@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — The Legal Office, ESSU</title>
+<link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+
+<header class="site-header" id="siteHeader"></header>
+
+<!-- About the Legal Office.
+     Source: the Legal Office's Office Operations Manual (2026 draft).
+     Static page: no API calls,
+     forms, cookies or embeds. Roles only, no staff names. The Legal Office
+     approves the final wording; keep the draft notice until it does. -->
+<main class="about-main">
+  <section class="about-hero">
+    <img class="about-hero-symbol" src="img/icons/symbol-scales.svg" alt="">
+    <div class="about-hero-text">
+      <h1>About the Legal Office</h1>
+      <p class="about-hero-lede">The Legal Office (LEO) of Eastern Samar State University provides legal services that help
+        the University act within the law and carry out its mandate.</p>
+      <div class="notice notice-draft">
+        <img src="img/icons/draft.svg" alt="">
+        <div>
+          <p class="notice-title">Draft for Legal Office review.</p>
+          <p class="notice-message">The wording on this page has not yet been approved by the ESSU Legal Office. Draft of 31 October 2026.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mission: this copy shows on desktop, the copy in the next section on phones.
+         CSS hides one of them completely, so a screen reader hears it once. Keep the two texts the same. -->
+    <aside class="mission-card mission-card-hero">
+      <h2>Mission</h2>
+      <p>To provide responsive, quality legal services that ensure compliance with the law and enable ESSU to carry
+        out its mandate with confidence in its rights, privileges, and protections.</p>
+    </aside>
+  </section>
+
+  <!-- Phones only: the page is long there, so these jump to each part. -->
+  <nav class="about-jump" aria-labelledby="aboutJumpLabel">
+    <p class="about-jump-label" id="aboutJumpLabel">On this page</p>
+    <div class="about-jump-links">
+      <a href="#mission">Mission</a>
+      <a href="#history">History</a>
+      <a href="#vision">Vision and values</a>
+      <a href="#goals">Goals and outcomes</a>
+      <a href="#organization">Organization</a>
+      <a href="#help">Get legal help</a>
+    </div>
+  </nav>
+
+  <section class="about-section">
+    <aside class="mission-card mission-card-phone" id="mission">
+      <h2>Mission</h2>
+      <p>To provide responsive, quality legal services that ensure compliance with the law and enable ESSU to carry
+        out its mandate with confidence in its rights, privileges, and protections.</p>
+    </aside>
+
+    <div class="about-row about-history">
+      <div class="about-history-text">
+        <h2 class="band-title" id="history">Historical background</h2>
+        <p>Under the Department of Budget and Management's National Budget Circular No. 589 (May 25, 2022), on the
+          revised Organization and Staffing Standards for state universities and colleges, ESSU created and filled the
+          positions of Attorney IV and Legal Assistants I to III. The appointments were signed on November 3, 2023, and
+          the Board of Regents confirmed the appointment of the Attorney IV through Resolution No. 224, s. 2024.</p>
+        <p>The Legal Office began operations in January 2024 at its office in the Administration Building, offering
+          legal services to the University. In 2025, it served a growing number of requests, working with the Office of
+          the Solicitor General (OSG) and the legal divisions of other government agencies. The office is now located
+          in the College of Law Building.</p>
+      </div>
+
+      <!-- New summary of the two paragraphs above, for Legal Office review. -->
+      <div class="key-dates">
+        <h3>Key dates</h3>
+        <ol class="key-dates-list">
+          <li>
+            <p class="key-dates-date">May 25, 2022</p>
+            <p>DBM National Budget Circular No. 589 revises staffing standards for state universities and colleges.</p>
+          </li>
+          <li>
+            <p class="key-dates-date">November 3, 2023</p>
+            <p>Appointments of the Attorney IV and Legal Assistants are signed.</p>
+          </li>
+          <li>
+            <p class="key-dates-date">January 2024</p>
+            <p>The Legal Office opens in the Administration Building.</p>
+          </li>
+          <li>
+            <p class="key-dates-date">2024</p>
+            <p>Board of Regents Resolution No. 224 confirms the Attorney IV.</p>
+          </li>
+          <li>
+            <p class="key-dates-date">2025</p>
+            <p>A growing number of requests, served with the OSG and other agencies.</p>
+          </li>
+          <li>
+            <p class="key-dates-date">Today</p>
+            <p>The office is in the College of Law Building.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section about-section-tint">
+    <div class="about-row">
+      <!-- "University Vision", not "Our Vision": the OOM's statement is ESSU's vision, not the office's own. -->
+      <div class="about-vision">
+        <h2 class="band-title" id="vision">University Vision</h2>
+        <p class="about-vision-statement">A technologically advanced University producing professionals and competitive
+          leaders for local and national development.</p>
+      </div>
+
+      <div class="about-values">
+        <h2 class="band-title">Core values</h2>
+        <div class="value-list">
+          <div class="value-card">
+            <span class="accent-square accent-plum"><img src="img/icons/ethics.svg" alt=""></span>
+            <div class="value-text">
+              <h3>Ethics</h3>
+              <p>Transparency, accountability, and integrity in all legal processes and advice.</p>
+            </div>
+          </div>
+          <div class="value-card">
+            <span class="accent-square accent-gold"><img src="img/icons/excellence.svg" alt=""></span>
+            <div class="value-text">
+              <h3>Professional Excellence</h3>
+              <p>Competence and diligence in all legal work.</p>
+            </div>
+          </div>
+          <div class="value-card">
+            <span class="accent-square accent-terracotta"><img src="img/icons/service.svg" alt=""></span>
+            <div class="value-text">
+              <h3>Service</h3>
+              <p>Timely, accurate, and practical legal support to the University.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section">
+    <div class="about-goals">
+      <div class="about-goal-column">
+        <h2 class="band-title" id="goals">Office goals</h2>
+        <p>The Legal Office aims to serve the University's legal needs with excellence, integrity, and accountability,
+          and to support legal compliance and due process. To this end, it seeks to:</p>
+        <ul class="check-list">
+          <li>Deliver legal service within the rule of law</li>
+          <li>Provide a forum for the resolution of issues</li>
+          <li>Pursue all lawful and alternative actions, with court action as a last resort</li>
+          <li>Build linkages with government agencies and the community for law and order</li>
+        </ul>
+      </div>
+
+      <div class="about-goal-column">
+        <h2 class="band-title">Service outcomes</h2>
+        <ul class="check-list">
+          <li>Provide the University the legal services it needs</li>
+          <li>Offer accessible legal support for all its legal undertakings</li>
+          <li>Serve as a fair ground where matters can be resolved amicably</li>
+          <li>Build the competence of office staff as a foundation for growth</li>
+          <li>Instill in staff and clients the ethics and responsibilities of the legal profession</li>
+          <li>Develop an ESSU community that adheres to the law</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section about-section-tint">
+    <div class="about-row about-organization">
+      <div class="about-org-heading">
+        <h2 class="band-title" id="organization">Organizational structure</h2>
+        <p>The Legal Office is under the Office of the University President. It is headed by the Attorney IV, assisted
+          by Legal Assistants appointed by the University President.</p>
+      </div>
+
+      <div class="org-chart">
+        <div class="org-card org-card-head">
+          <h3>Attorney IV</h3>
+          <p>Heads the office. Acts as the University's legal adviser; represents the University before courts and
+            administrative bodies, including when deputized by the OSG; sets standards for legal opinions and memoranda;
+            reviews legal documents; and develops the office's records management policies.</p>
+        </div>
+        <!-- Only draws the lines between the cards (CSS). -->
+        <div class="org-connector"></div>
+        <div class="org-assistants">
+          <div class="org-card">
+            <h3>Legal Assistant III</h3>
+            <p>Maintains case files, researches laws, rules, and jurisprudence, schedules the office's activities,
+              receives and routes documents, and records meeting proceedings.</p>
+          </div>
+          <div class="org-card">
+            <h3>Legal Assistants I and II</h3>
+            <p>Prepare orders and notices for cases, research laws and jurisprudence, maintain the case-status database,
+              prepare correspondence, clearances, and certifications, and log and follow up on concerns brought to the
+              office.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-section">
+    <div class="about-cta" id="help">
+      <img class="building-photo building-photo-small" src="img/col-bldg.jpg" alt="The College of Law Building, ESSU Main Campus, home of the Legal Office" width="1007" height="755" loading="lazy">
+
+      <div class="about-cta-text">
+        <h2>Need legal assistance from the Legal Office?</h2>
+        <!-- The office is now in the College of Law Building (the OOM names the Administration Building).
+             Hours: same text as home.html (#homeHours) and OFFICE_HOURS in
+             internal/js/request-detail.js. -->
+        <div class="icon-row">
+          <img src="img/icons/location.svg" alt="">
+          <p>College of Law Building, ESSU Main Campus, Borongan City, Eastern Samar, Philippines 6800</p>
+        </div>
+        <div class="icon-row">
+          <img src="img/icons/clock.svg" alt="">
+          <p>Monday to Friday, 8:00 AM to 5:00 PM, except holidays</p>
+        </div>
+      </div>
+
+      <div class="about-cta-actions">
+        <a class="nav-btn btn-primary" href="portal.html">Request a Legal Service <img src="img/icons/arrow-right-white.svg" alt=""></a>
+        <a class="nav-btn btn-secondary" href="portal.html?door=complaint">File a Complaint or Referral</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+
+<script src="js/components.js"></script>
+<script src="js/site-page.js" data-nav="about"></script>
+<script src="js/api-config.js"></script>
+<script src="js/site-search.js"></script>
+</body>
+</html>

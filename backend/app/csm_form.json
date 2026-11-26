@@ -1,0 +1,88 @@
+{
+  "_about": [
+    "Client Satisfaction Measurement (CSM) form shown to clients on their request page.",
+    "Follows the Legal Office's printed Client Satisfaction Measurement form (Version 1, effective May 10, 2023;",
+    "manuscript Appendix E), which is based on the ARTA harmonized CSM. Choices are listed from Strongly disagree",
+    "to Strongly agree (manuscript Figure 9.3). The printed form's name, sex, age, client type and email blanks are",
+    "left out: no new personal data is collected, and the client type and service come from the request.",
+    "To change the form: edit this file, keep valid JSON, and change \"version\" so old answers stay apart.",
+    "Question ids and choice values are saved with each answer; do not reuse an id for a different question.",
+    "Answers count as satisfied when their value is in the scale's \"satisfied_values\" (ARTA: Agree + Strongly Agree)."
+  ],
+  "version": "essu-csm-v1-2023-05-10",
+  "placeholder": false,
+  "title": "Client Satisfaction Measurement",
+  "intro": "Help us serve you better! This Client Satisfaction Measurement (CSM) tracks the customer experience of government offices. Your feedback on your recently concluded transaction will help this office provide a better service. Personal information shared will be kept confidential and you always have the option to not answer this form. Your answers are seen only as totals: the Legal Office does not see how each client answered.",
+  "scales": {
+    "agreement": {
+      "options": [
+        {"value": "1", "label": "Strongly disagree"},
+        {"value": "2", "label": "Disagree"},
+        {"value": "3", "label": "Neither agree nor disagree"},
+        {"value": "4", "label": "Agree"},
+        {"value": "5", "label": "Strongly agree"},
+        {"value": "NA", "label": "Not applicable"}
+      ],
+      "satisfied_values": ["4", "5"],
+      "not_applicable_values": ["NA"]
+    }
+  },
+  "sections": [
+    {
+      "heading": "Citizen's Charter",
+      "instructions": "The Citizen's Charter (CC) is an official document that reflects the services of a government agency/office including its requirements, fees, and processing times among others.",
+      "questions": [
+        {
+          "id": "CC1",
+          "text": "Which of the following best describes your awareness of a CC?",
+          "options": [
+            {"value": "1", "label": "1. I know what a CC is and I saw this office's CC."},
+            {"value": "2", "label": "2. I know what a CC is but I did NOT see this office's CC."},
+            {"value": "3", "label": "3. I learned of the CC only when I saw this office's CC."},
+            {"value": "4", "label": "4. I do not know what a CC is and I did not see one in this office. (Answer N/A on CC2 and CC3)"}
+          ]
+        },
+        {
+          "id": "CC2",
+          "text": "If aware of CC (answered 1-3 in CC1), would you say that the CC of this office was ...?",
+          "options": [
+            {"value": "1", "label": "1. Easy to see"},
+            {"value": "2", "label": "2. Somewhat easy to see"},
+            {"value": "3", "label": "3. Difficult to see"},
+            {"value": "4", "label": "4. Not visible at all"},
+            {"value": "NA", "label": "5. N/A"}
+          ]
+        },
+        {
+          "id": "CC3",
+          "text": "If aware of CC (answered codes 1-3 in CC1), how much did the CC help you in your transaction?",
+          "options": [
+            {"value": "1", "label": "1. Helped very much"},
+            {"value": "2", "label": "2. Somewhat helped"},
+            {"value": "3", "label": "3. Did not help"},
+            {"value": "NA", "label": "4. N/A"}
+          ]
+        }
+      ]
+    },
+    {
+      "heading": "Service quality",
+      "instructions": "For SQD 0-8, please choose the answer that best corresponds to each statement.",
+      "questions": [
+        {"id": "SQD0", "scale": "agreement", "text": "I am satisfied with the service that I availed."},
+        {"id": "SQD1", "scale": "agreement", "text": "I spent a reasonable amount of time for my transaction."},
+        {"id": "SQD2", "scale": "agreement", "text": "The office followed the transaction's requirements and steps based on the information provided."},
+        {"id": "SQD3", "scale": "agreement", "text": "The steps (including payment) I needed to do for my transaction were easy and simple."},
+        {"id": "SQD4", "scale": "agreement", "text": "I easily found information about my transaction from the office or its website."},
+        {"id": "SQD5", "scale": "agreement", "text": "I paid a reasonable amount of fees for my transaction."},
+        {"id": "SQD6", "scale": "agreement", "text": "I feel the office was fair to everyone, or \"walang palakasan\", during my transaction."},
+        {"id": "SQD7", "scale": "agreement", "text": "I was treated courteously by the staff, and (if asked for help) the staff was helpful."},
+        {"id": "SQD8", "scale": "agreement", "text": "I got what I needed from the government office or (if denied) denial of request was sufficiently explained to me."}
+      ]
+    }
+  ],
+  "comment": {
+    "label": "Suggestions on how we can further improve our services (optional)",
+    "max_length": 1000
+  }
+}

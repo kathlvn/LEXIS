@@ -1,0 +1,77 @@
+/* Staff login. Uses the console's tokens,
+   .rd-field / .rd-label / .rd-input and .btn from internal.css. */
+.login-body {
+  display: flex;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 32px 16px;
+  box-sizing: border-box;
+}
+
+.login-shell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 420px;
+  margin: auto;
+}
+
+/* Seal + name above the card */
+.login-brand { display: flex; align-items: center; gap: 12px; }
+.login-seal { flex: 0 0 40px; width: 40px; height: 40px; object-fit: contain; }
+.login-brand-name { font-family: var(--font-serif); font-size: 26px; line-height: 28px; font-weight: 600; color: var(--brand); white-space: nowrap; }
+
+.login-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 32px;
+  background: #fff;
+  border: 1px solid var(--line-card);
+  border-radius: var(--radius-card);
+}
+
+.login-head { display: flex; flex-direction: column; gap: 4px; }
+.login-title { margin: 0; font-family: var(--font-serif); font-size: 36px; line-height: 40px; font-weight: 600; color: var(--brand); }
+.login-lede { margin: 0; font-size: 14px; line-height: 20px; color: var(--ink-muted); overflow-wrap: anywhere; }
+
+/* Signed out (grey), verified (green) or what went wrong (red) */
+.login-msg { margin: 0; padding: 12px 14px; border: 1px solid var(--line-card); border-radius: var(--radius-control); background: var(--table-head-bg); font-size: 13px; line-height: 20px; color: var(--ink); overflow-wrap: anywhere; }
+.login-msg[hidden] { display: none; }
+.login-msg.ok { background: #d3e7d8; border-color: #d3e7d8; color: #1d4d2b; }
+.login-msg.error { background: var(--status-stopped-tint); border-color: var(--status-stopped-tint); color: var(--status-stopped-text); font-weight: 500; }
+
+.login-form { display: flex; flex-direction: column; gap: 16px; }
+.login-form[hidden] { display: none; }
+.login-form .rd-label { line-height: 18px; }
+
+/* Password box with "Show" inside it, on the right */
+.login-pw { position: relative; }
+.login-pw .rd-input { padding-right: 64px; }
+.login-pw-toggle { position: absolute; top: 50%; right: 6px; transform: translateY(-50%); height: 28px; padding: 0 6px; background: none; border: none; border-radius: 4px; font: inherit; font-size: 13px; font-weight: 500; color: var(--brand); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.login-pw-toggle:hover { text-decoration-thickness: 2px; }
+.login-pw-toggle:focus-visible { outline: 2px solid var(--focus); outline-offset: 0; }
+
+.rd-input.login-code { font-size: 20px; letter-spacing: 6px; text-align: center; font-variant-numeric: tabular-nums; }
+
+.login-links { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.login-small { margin: 0; font-size: 13px; line-height: 20px; color: var(--ink-muted); text-align: center; }
+.login-link { padding: 0; background: none; border: none; font: inherit; font-weight: 500; color: var(--brand); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.login-link:hover { text-decoration-thickness: 2px; }
+.login-link:disabled { color: var(--ink-muted); text-decoration: none; cursor: default; }
+.login-link:focus-visible, .login-below a:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 2px; }
+
+/* Under the card */
+.login-below { display: flex; flex-direction: column; gap: 4px; font-size: 13px; line-height: 20px; color: var(--ink-muted); text-align: center; }
+.login-below p { margin: 0; }
+.login-below a { font-weight: 500; color: var(--brand); text-underline-offset: 2px; }
+
+@media (max-width: 480px) {
+  .login-body { padding: 24px 16px; }
+  .login-card { padding: 24px 20px; }
+  .login-title { font-size: 32px; line-height: 36px; }
+}

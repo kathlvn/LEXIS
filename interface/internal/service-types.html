@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Service Types — The Legal Office Staff Console</title>
+<link rel="stylesheet" href="css/internal.css">
+<style>html{visibility:hidden;}</style>
+</head>
+<body>
+
+<header class="app-topbar" id="appTopbar"></header>
+
+<div class="app-shell">
+  <nav class="app-sidebar" id="appSidebar"></nav>
+
+  <!-- Two views: the service list, and editing
+       one service. js/service-types.js switches between them. -->
+  <main class="app-main">
+
+    <!-- The list -->
+    <div class="svc-view" id="svcListView">
+      <div class="rd-heading">
+        <div class="rd-title">
+          <h1 class="page-title">Service types</h1>
+          <p class="page-subtitle">The services clients can request. Changes apply only to requests sent after them.</p>
+        </div>
+        <button type="button" class="btn btn-primary" id="svcAddBtn">Add a service</button>
+      </div>
+
+      <div id="svcPageMsg" role="status"></div>
+
+      <!-- Add a service -->
+      <section class="rd-card svc-card svc-add" id="svcAddCard" aria-labelledby="svcAddTitle" hidden>
+        <div class="svc-card-head"><h2 class="rd-card-title" id="svcAddTitle">Add a service</h2></div>
+        <form class="svc-form" id="svcForm" novalidate>
+          <div class="svc-fields">
+            <div class="rd-field">
+              <label class="rd-label" for="svcName">Name</label>
+              <input type="text" class="rd-input" id="svcName" maxlength="150" required>
+            </div>
+            <div class="rd-field">
+              <label class="rd-label" for="svcDays">Processing period (working days)</label>
+              <input type="number" class="rd-input" id="svcDays" min="1" max="365" step="1" inputmode="numeric" aria-describedby="svcDaysHint">
+              <p class="rd-hint" id="svcDaysHint">Leave blank for no set period.</p>
+            </div>
+            <div class="rd-field svc-span">
+              <label class="rd-label" for="svcDesc">Description (optional)</label>
+              <input type="text" class="rd-input" id="svcDesc" maxlength="1000" placeholder="A short line clients see under the service name">
+            </div>
+          </div>
+          <p class="svc-note">A new service starts open to ESSU offices and employees, with every workflow step and no documents. You can change those next.</p>
+          <div class="svc-actions">
+            <p class="svc-status error" id="svcFormMessage" role="alert"></p>
+            <button type="button" class="btn btn-secondary" id="svcFormCancelBtn">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="svcFormSubmitBtn">Add service</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="rd-card svc-list" aria-labelledby="svcListTitle">
+        <div class="svc-list-head">
+          <h2 class="svc-list-title" id="svcListTitle">Services</h2>
+          <p class="svc-card-count" id="svcCount"></p>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table svc-table" id="svcTable">
+            <thead><tr><th>Service</th><th>Processing period</th><th>Documents to upload</th><th>Who may use it online</th><th>Requests</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+          </table>
+        </div>
+        <p class="svc-foot">Services can be added and edited, not deleted. A new processing period, checklist or “who may use it” applies only to requests sent after the change.</p>
+      </section>
+    </div>
+
+    <!-- One service: three cards that each save on their own -->
+    <div class="svc-view" id="svcEditView" hidden>
+      <div class="rd-heading">
+        <button type="button" class="back-btn" id="svcBackBtn" aria-label="Back to the services" title="Back to the services"></button>
+        <div class="rd-title">
+          <h1 class="page-title" id="svcEditTitle">Service</h1>
+          <p class="page-subtitle" id="svcEditSub"></p>
+        </div>
+      </div>
+
+      <div id="svcEditMsg" role="status"></div>
+
+      <div class="svc-edit-layout">
+        <div class="svc-edit-main">
+          <section class="rd-card svc-card" id="svcDetailsCard" aria-labelledby="svcDetailsTitle"></section>
+          <section class="rd-card svc-card" id="svcDocsCard" aria-labelledby="svcDocsTitle"></section>
+        </div>
+        <section class="rd-card svc-card svc-access side-sticky" id="svcAccessCard" aria-labelledby="svcAccessTitle"></section>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/api-config.js"></script>
+<script src="js/auth-guard.js"></script>
+<script src="js/api-data.js"></script>
+<script src="js/render-helper.js"></script>
+<script src="js/components.js"></script>
+<script src="js/service-types.js"></script>
+</body>
+</html>

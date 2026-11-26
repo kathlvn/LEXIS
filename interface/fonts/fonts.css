@@ -1,0 +1,144 @@
+/* Self-hosted fonts. Served from LEXIS itself, so no visitor's IP
+   address is sent to Google or any other font service (RA 10173).
+
+   Inter (body) and Cormorant Garamond (headings), Latin set, weights
+   400/500/600/700, normal style: the same files Google Fonts serves, taken
+   unmodified from the Fontsource packages @fontsource/inter@5.3.0 and
+   @fontsource/cormorant-garamond@5.3.0 (npm registry, checksums verified).
+
+   Both fonts are under the SIL Open Font License 1.1; the licence texts with
+   their copyright notices are OFL-Inter.txt and OFL-CormorantGaramond.txt
+   in this folder. */
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(inter/inter-latin-400-normal.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(inter/inter-latin-500-normal.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(inter/inter-latin-600-normal.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(inter/inter-latin-700-normal.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: url(cormorant-garamond/cormorant-garamond-latin-400-normal.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 500;
+  src: url(cormorant-garamond/cormorant-garamond-latin-500-normal.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 600;
+  src: url(cormorant-garamond/cormorant-garamond-latin-600-normal.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 700;
+  src: url(cormorant-garamond/cormorant-garamond-latin-700-normal.woff2) format('woff2');
+}
+
+/* Stand-ins while the files above load (PERF-03). With font-display: swap the
+   page first shows Arial and Georgia; Georgia is about 30% wider than
+   Cormorant Garamond, so on phones the header name wrapped and the page jumped
+   when the real font arrived. These use the fonts already on the device
+   (local(), nothing is downloaded), scaled to the same width and line height.
+   Numbers measured in Chromium for each weight (width of sample text against
+   Arial / Arial Bold and Georgia Bold; ascent-override and descent-override
+   are the real font's, divided by size-adjust). If a device has none of these
+   fonts, the next font in the list is used, as before. */
+@font-face {
+  font-family: 'Inter Fallback';
+  font-weight: 400;
+  src: local('Arial'), local('ArialMT');
+  size-adjust: 106.2%;
+  ascent-override: 91.3%;
+  descent-override: 22.6%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  font-weight: 500;
+  src: local('Arial'), local('ArialMT');
+  size-adjust: 107.3%;
+  ascent-override: 90.4%;
+  descent-override: 22.4%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  font-weight: 600;
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  size-adjust: 101.3%;
+  ascent-override: 95.8%;
+  descent-override: 23.7%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  font-weight: 700;
+  src: local('Arial Bold'), local('Arial-BoldMT');
+  size-adjust: 102.4%;
+  ascent-override: 94.7%;
+  descent-override: 23.4%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond Fallback';
+  font-weight: 400 500;
+  src: local('Georgia');
+  size-adjust: 88.8%;
+  ascent-override: 103.6%;
+  descent-override: 32.7%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Cormorant Garamond Fallback';
+  font-weight: 600 700;
+  src: local('Georgia Bold'), local('Georgia-Bold');
+  size-adjust: 77.3%;
+  ascent-override: 119%;
+  descent-override: 37.5%;
+  line-gap-override: 0%;
+}

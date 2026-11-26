@@ -1,0 +1,41 @@
+http://localhost:8080 {
+	# Caching (PERF-01). API answers hold personal data: never stored.
+	# Pages, styles, scripts and images: the browser keeps a copy but asks
+	# each time whether it changed (a quick 304 if not), so an edited file
+	# still shows on the next load without downloading everything again.
+	@static not path /api/*
+	header @static Cache-Control "no-cache"
+	header /api/* Cache-Control "no-store"
+
+	header {
+		# Security headers. Strict-Transport-Security is added
+		# at deployment, once the site runs on HTTPS.
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "same-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+		Cross-Origin-Opener-Policy "same-origin"
+		# Only LEXIS's own files. No inline scripts or onclick="" handlers: every
+		# script is a .js file.
+		# Styles keep 'unsafe-inline': pages use <style> blocks and style="".
+		# data: images: the inline SVG in css/base.css.
+		Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; worker-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+	}
+	header -Server
+
+	handle_path /api/* {
+		# No request body over 75 MB reaches LEXIS; LEXIS itself
+		# allows 1 MB except for uploads.
+		request_body {
+			max_size 75MB
+		}
+		reverse_proxy localhost:8000
+	}
+
+	handle {
+		root * interface
+		# Compress pages, styles and scripts (PERF-01). API answers are left as is.
+		encode zstd gzip
+		file_server
+	}
+}

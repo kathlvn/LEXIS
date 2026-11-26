@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reports — The Legal Office Staff Console</title>
+<link rel="stylesheet" href="css/internal.css">
+<style>html{visibility:hidden;}</style>
+</head>
+<body>
+
+<header class="app-topbar" id="appTopbar"></header>
+
+<div class="app-shell">
+  <nav class="app-sidebar" id="appSidebar"></nav>
+
+  <!-- Heading, period bar, the report as
+       cards on the left, "On this page" on the right. js/reports.js fills
+       every card from GET /reports. -->
+  <main class="app-main">
+    <div class="rd-heading">
+      <div class="rd-title">
+        <h1 class="page-title">Reports</h1>
+        <p class="page-subtitle">Office figures for a month, quarter or year. Print the whole report or only the accomplished list.</p>
+      </div>
+      <button type="button" class="btn btn-secondary rpt-print-btn" id="rptPrintBtn"></button>
+    </div>
+
+    <div class="rd-card rpt-period">
+      <div class="rpt-period-controls">
+        <span class="rpt-period-label" id="rptPeriodLabel">Period</span>
+        <div class="rpt-seg" role="radiogroup" aria-labelledby="rptPeriodLabel">
+          <label><input type="radio" name="rptPeriod" value="month" checked> Month</label>
+          <label><input type="radio" name="rptPeriod" value="quarter"> Quarter</label>
+          <label><input type="radio" name="rptPeriod" value="year"> Year</label>
+        </div>
+        <select class="rd-input rpt-select" id="rptMonth" aria-label="Month"></select>
+        <select class="rd-input rpt-select" id="rptQuarter" aria-label="Quarter" hidden>
+          <option value="1">Q1 (Jan–Mar)</option>
+          <option value="2">Q2 (Apr–Jun)</option>
+          <option value="3">Q3 (Jul–Sep)</option>
+          <option value="4">Q4 (Oct–Dec)</option>
+        </select>
+        <select class="rd-input rpt-select rpt-select-year" id="rptYear" aria-label="Year"></select>
+      </div>
+      <p class="rpt-made" id="rptMade" role="status"></p>
+    </div>
+
+    <div class="rpt-layout">
+      <div class="rpt-report" id="rptReport">
+
+        <section class="rd-card rpt-card" id="rpt-summary" aria-labelledby="rptSummaryTitle">
+          <div class="rpt-card-head">
+            <h2 class="rpt-card-title" id="rptSummaryTitle">Summary</h2>
+            <p class="rpt-card-note" id="rptSummaryNote"></p>
+          </div>
+          <div class="rpt-card-body">
+            <div class="rpt-stats rpt-stats-5" id="rptTiles"></div>
+          </div>
+        </section>
+
+        <section class="rd-card rpt-card" id="rpt-month" aria-labelledby="rptChartTitle">
+          <div class="rpt-card-head">
+            <h2 class="rpt-card-title" id="rptChartTitle">Requests received per month</h2>
+            <p class="rpt-card-note" id="rptChartNote"></p>
+          </div>
+          <div class="rpt-card-body">
+            <div class="rpt-chart" id="rptChart"></div>
+            <details class="rpt-fold">
+              <summary></summary>
+              <div class="table-wrap"><table class="data-table rpt-table rpt-month-table" id="rptMonthTable"></table></div>
+            </details>
+          </div>
+        </section>
+
+        <section class="rd-card rpt-card" id="rpt-service" aria-labelledby="rptServiceTitle">
+          <div class="rpt-card-head">
+            <h2 class="rpt-card-title" id="rptServiceTitle">Requests by service and status</h2>
+            <p class="rpt-card-note">Average counts working days from submission to completion. Overdue does not apply to services with no set period.</p>
+          </div>
+          <div class="table-wrap"><table class="data-table rpt-table rpt-wide" id="rptServiceTable"></table></div>
+        </section>
+
+        <div class="rpt-two-col">
+          <section class="rd-card rpt-card" id="rpt-status" aria-labelledby="rptStatusTitle">
+            <div class="rpt-card-head">
+              <h2 class="rpt-card-title" id="rptStatusTitle">Requests by status</h2>
+              <p class="rpt-card-note" id="rptStatusNote"></p>
+            </div>
+            <div class="table-wrap"><table class="data-table rpt-table" id="rptStatusTable"></table></div>
+          </section>
+          <section class="rd-card rpt-card" id="rpt-office" aria-labelledby="rptOfficeTitle">
+            <div class="rpt-card-head">
+              <h2 class="rpt-card-title" id="rptOfficeTitle">Requests by office or agency</h2>
+              <p class="rpt-card-note">The client’s office as filed with each request.</p>
+            </div>
+            <div class="table-wrap"><table class="data-table rpt-table" id="rptOfficeTable"></table></div>
+          </section>
+        </div>
+
+        <section class="rd-card rpt-card" id="rpt-party" aria-labelledby="rptPartyTitle">
+          <div class="rpt-card-head">
+            <h2 class="rpt-card-title" id="rptPartyTitle">Requests by requesting party</h2>
+            <p class="rpt-card-note" id="rptPartyNote"></p>
+          </div>
+          <div class="table-wrap"><table class="data-table rpt-table" id="rptPartyTable"></table></div>
+        </section>
+
+        <section class="rd-card rpt-card" id="rpt-staff" aria-labelledby="rptStaffTitle">
+          <div class="rpt-card-head">
+            <h2 class="rpt-card-title" id="rptStaffTitle">Staff workload</h2>
+            <p class="rpt-card-note">By the staff member each request is assigned to now. Handled includes cancelled or rejected requests.</p>
+          </div>
+          <div class="table-wrap"><table class="data-table rpt-table rpt-wide" id="rptStaffTable"></table></div>
+        </section>
+
+        <!-- Client Satisfaction Measurement: totals only -->
+        <section class="rd-card rpt-card" id="rpt-csm" aria-labelledby="rptCsmTitle">
+          <div class="rpt-card-head">
+            <h2 class="rpt-card-title" id="rptCsmTitle">Client Satisfaction Measurement</h2>
+            <p class="rpt-card-note" id="rptCsmNote"></p>
+          </div>
+          <div id="rptCsm"></div>
+        </section>
+
+        <!-- Contract reviews: filed in the period + earlier ones still open -->
+        <section class="rd-card rpt-card rpt-list" id="rpt-contracts" aria-labelledby="rptConTitle">
+          <div class="rpt-card-head">
+            <h2 class="rpt-card-title" id="rptConTitle">Contract reviews</h2>
+            <p class="rpt-card-note" id="rptConNote"></p>
+          </div>
+          <div class="table-wrap"><table class="data-table rpt-table rpt-wide" id="rptConTable"></table></div>
+        </section>
+
+        <!-- Accomplished requests: completed in the period. Starts a
+             new page in Print report; "Print this list" prints this card alone. -->
+        <section class="rd-card rpt-card rpt-list rpt-accomplished" id="rpt-accomplished" aria-labelledby="rptAccTitle">
+          <div class="rpt-card-head">
+            <p class="rpt-print-only">The Legal Office — Eastern Samar State University</p>
+            <div class="rpt-card-title-row">
+              <h2 class="rpt-card-title" id="rptAccTitle">Accomplished requests</h2>
+              <button type="button" class="btn btn-secondary btn-compact rpt-print-btn" id="rptPrintListBtn"></button>
+            </div>
+            <p class="rpt-card-note" id="rptAccNote"></p>
+          </div>
+          <div class="table-wrap"><table class="data-table rpt-table rpt-wide" id="rptAccTable"></table></div>
+          <p class="rpt-card-foot" id="rptAccFoot" hidden></p>
+        </section>
+
+        <details class="rd-card rpt-howto" id="rpt-howto">
+          <summary>
+            <span class="rpt-howto-icon" id="rptHowtoIcon"></span>
+            <span class="rpt-howto-text">
+              <span class="rpt-howto-title">How the figures are counted</span>
+              <span class="rpt-howto-sub">Periods, Philippine time, working days, holidays, and what each column means.</span>
+            </span>
+            <span class="rpt-howto-chev" id="rptHowtoChev"></span>
+          </summary>
+          <div class="rpt-howto-body">
+            <p>A request belongs to a period if it was <b>submitted</b> in that period (Philippine time).
+              Completed, pending and overdue show those requests’ state <b>as of today</b>; pending means not yet
+              completed, cancelled or rejected.</p>
+            <p>Average processing time counts working days from submission to completion, skipping weekends and
+              the dates on the Holidays page. Overdue does not apply to services with no set period.</p>
+            <p>Staff workload is by the staff member each request is assigned to now. Office and requesting party
+              are the client’s details as filed with each request.</p>
+            <p>Accomplished requests are the exception: they are the requests <b>completed</b> in the period,
+              whenever they were filed (completion = the last change to Completed). Contract reviews list the
+              “Review of MOA/MOU, Contracts” requests filed in the period, plus any filed earlier that are still open.</p>
+            <p>The Client Satisfaction Measurement counts surveys clients <b>answered</b> in the period (offered after
+              a request is completed; optional). Satisfied means Agree or Strongly agree, out of the answers that are
+              not “Not applicable”; the overall rate counts every rated statement together. Results show only
+              totals, and only from 3 responses, so no single client’s answers can be seen.</p>
+          </div>
+        </details>
+      </div>
+
+      <nav class="rd-card rpt-toc side-sticky" aria-label="On this page">
+        <p class="rpt-toc-title">On this page</p>
+        <a class="rpt-toc-link" href="#rpt-summary">Summary</a>
+        <a class="rpt-toc-link" href="#rpt-month">Received per month</a>
+        <a class="rpt-toc-link" href="#rpt-service">By service and status</a>
+        <a class="rpt-toc-link" href="#rpt-status">By status</a>
+        <a class="rpt-toc-link" href="#rpt-office">By office or agency</a>
+        <a class="rpt-toc-link" href="#rpt-party">By requesting party</a>
+        <a class="rpt-toc-link" href="#rpt-staff">Staff workload</a>
+        <a class="rpt-toc-link" href="#rpt-csm">Client satisfaction</a>
+        <a class="rpt-toc-link" href="#rpt-contracts">Contract reviews</a>
+        <a class="rpt-toc-link" href="#rpt-accomplished">Accomplished requests</a>
+        <span class="rpt-toc-divider"></span>
+        <a class="rpt-toc-link rpt-toc-howto" href="#rpt-howto" id="rptTocHowto">How the figures are counted</a>
+      </nav>
+    </div>
+  </main>
+</div>
+
+<script src="js/api-config.js"></script>
+<script src="js/auth-guard.js"></script>
+<script src="js/api-data.js"></script>
+<script src="js/render-helper.js"></script>
+<script src="js/components.js"></script>
+<script src="js/reports.js"></script>
+</body>
+</html>

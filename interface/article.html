@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Article — The Legal Office, Eastern Samar State University</title>
+<link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+
+<header class="site-header" id="siteHeader"></header>
+
+<!-- js/article.js fills it in.
+     "article-bare" = no article to show yet: the hero holds only the back link. -->
+<main class="articles-main article-bare">
+  <section class="article-hero">
+    <!-- Decorative. The phone copy has its own line weight and strength. -->
+    <picture class="article-hero-symbol">
+      <source media="(max-width: 640px)" srcset="img/icons/symbol-book-phone.svg">
+      <img src="img/icons/symbol-book.svg" alt="">
+    </picture>
+    <a class="text-link" href="articles.html">&lsaquo;&nbsp; All articles</a>
+    <div class="article-hero-title">
+      <p class="article-hero-kicker">Article</p>
+      <h1 id="articleTitle" tabindex="-1"></h1>
+      <p>The Legal Office &nbsp;·&nbsp; <span id="articleDate"></span></p>
+    </div>
+  </section>
+
+  <section class="article-content">
+    <!-- Screen readers hear what appears here: "Loading the article…", or "not available". -->
+    <div id="articleState" role="status"></div>
+    <div id="articleError"></div>
+
+    <div class="article-layout" id="articleView" hidden>
+      <div class="article-reading">
+        <article class="article-body" id="articleBody"></article>
+        <!-- New line, from the Terms of Use, for Legal Office review. -->
+        <p class="article-note">This article is general information, not legal advice. See the <a href="terms.html">Terms of Use</a>.</p>
+      </div>
+
+      <!-- Hours: same text as home.html (#homeHours) and about.html. -->
+      <aside class="article-side">
+        <h2>Need legal assistance from the Legal Office?</h2>
+        <p>Monday to Friday, 8:00 AM to 5:00 PM, except holidays</p>
+        <a class="nav-btn btn-primary" href="portal.html">Request a Legal Service <img src="img/icons/arrow-right-white.svg" alt=""></a>
+        <a class="text-link" href="portal.html?door=complaint">File a Complaint or Referral <img src="img/icons/arrow-right-green.svg" alt=""></a>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Removed if there is no other article or the list can't be loaded (js/article.js). -->
+  <section class="article-more" id="articleMore" hidden>
+    <div class="article-more-heading">
+      <h2 class="band-title">More articles</h2>
+      <a class="text-link article-more-all-top" href="articles.html">See all articles <img src="img/icons/arrow-right-green.svg" alt=""></a>
+    </div>
+    <div class="article-cards" id="articleMoreCards"></div>
+    <a class="text-link article-more-all-bottom" href="articles.html">See all articles <img src="img/icons/arrow-right-green.svg" alt=""></a>
+  </section>
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+
+<script src="js/components.js"></script>
+<script src="js/site-page.js" data-nav="articles"></script>
+<script src="js/api-config.js"></script>
+<script src="js/site-search.js"></script>
+<script src="js/article-format.js"></script>
+<script src="js/article.js"></script>
+</body>
+</html>

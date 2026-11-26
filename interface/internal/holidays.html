@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Holidays — The Legal Office Staff Console</title>
+<link rel="stylesheet" href="css/internal.css">
+<style>html{visibility:hidden;}</style>
+</head>
+<body>
+
+<header class="app-topbar" id="appTopbar"></header>
+
+<div class="app-shell">
+  <nav class="app-sidebar" id="appSidebar"></nav>
+
+  <!-- Two views: calendar + list, and the results of
+       "Check proclamation". js/holidays.js switches between the two views. -->
+  <main class="app-main">
+
+    <!-- Calendar and list -->
+    <div class="hol-view" id="holListView">
+      <div class="rd-heading">
+        <div class="rd-title">
+          <h1 class="page-title">Holidays</h1>
+          <p class="page-subtitle">Due dates skip weekends and the dates below (RA 11032). Add each year's dates after the presidential proclamation.</p>
+        </div>
+        <!-- Head Attorney only (holidays.js shows them; the server checks too) -->
+        <div class="hol-heading-actions" id="holHeadActions" hidden>
+          <button type="button" class="btn btn-secondary" id="checkProclamationBtn"
+                  title="Read the selected year's holiday proclamation from the Official Gazette">Check proclamation</button>
+          <button type="button" class="btn btn-primary" id="holAddBtn">Add a date</button>
+        </div>
+      </div>
+
+      <div id="holPageMsg" role="status"></div>
+
+      <!-- Add a date (Head Attorney): "Add a date", or a click on an empty calendar day -->
+      <section class="rd-card hol-add" id="holAddCard" aria-labelledby="holAddTitle" hidden>
+        <h2 class="rd-card-title" id="holAddTitle">Add a date</h2>
+        <form id="holidayForm" novalidate>
+          <div class="hol-add-fields">
+            <div class="rd-field">
+              <label class="rd-label" for="holidayDate">Date</label>
+              <input type="date" class="rd-input" id="holidayDate" required>
+            </div>
+            <div class="rd-field">
+              <label class="rd-label" for="holidayType">Type</label>
+              <select class="rd-input" id="holidayType" required>
+                <option value="regular">Regular holiday</option>
+                <option value="special">Special non-working day</option>
+                <option value="local">Local holiday</option>
+                <option value="suspension">Work suspension</option>
+              </select>
+            </div>
+            <div class="rd-field hol-add-name">
+              <label class="rd-label" for="holidayName">Name</label>
+              <input type="text" class="rd-input" id="holidayName" maxlength="150" placeholder="e.g. Bonifacio Day" required>
+            </div>
+          </div>
+          <p class="hol-form-error" id="holidayFormMessage" role="alert"></p>
+          <div class="hol-actions">
+            <button type="button" class="btn btn-secondary" id="holidayFormCancelBtn">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="holidayFormSubmitBtn">Add date</button>
+          </div>
+        </form>
+      </section>
+
+      <div class="hol-layout">
+        <section class="rd-card hol-cal side-sticky" aria-labelledby="calTitle">
+          <div class="hol-cal-main">
+            <div class="hol-cal-head">
+              <button type="button" class="hol-cal-nav" id="calPrev" aria-label="Previous month" title="Previous month"></button>
+              <h2 class="hol-cal-title" id="calTitle" aria-live="polite"></h2>
+              <button type="button" class="hol-cal-nav" id="calNext" aria-label="Next month" title="Next month"></button>
+            </div>
+            <div class="hol-cal-month">
+              <div class="hol-cal-weekdays" aria-hidden="true">
+                <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+              </div>
+              <div class="hol-cal-grid" id="calGrid"></div>
+            </div>
+          </div>
+          <div class="hol-cal-side">
+            <div class="hol-cal-month-list">
+              <p class="hol-cal-month-label" id="calMonthLabel"></p>
+              <ul class="hol-cal-items" id="calMonthItems"></ul>
+            </div>
+            <ul class="hol-legend" aria-label="Colour key">
+              <li><i class="hol-dot regular"></i>Regular holiday</li>
+              <li><i class="hol-dot special"></i>Special non-working day</li>
+              <li><i class="hol-dot local"></i>Local holiday</li>
+              <li><i class="hol-dot suspension"></i>Work suspension</li>
+              <li><i class="hol-weekend-key"></i>Weekend</li>
+            </ul>
+            <p class="hol-cal-hint" id="calHint"></p>
+          </div>
+        </section>
+
+        <section class="rd-card hol-list" aria-labelledby="holListTitle">
+          <div class="hol-list-head">
+            <h2 class="hol-list-title" id="holListTitle">Dates</h2>
+            <label class="hol-year-label" for="holidayYear">Year</label>
+            <select class="rd-input hol-year" id="holidayYear"></select>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table hol-table" id="holidayTable">
+              <thead><tr><th>Date</th><th>Day</th><th>Name</th><th>Type</th><th class="hol-col-act"><span class="visually-hidden">Actions</span></th></tr></thead>
+            </table>
+          </div>
+          <p class="hol-foot" id="holidayFoot" hidden></p>
+        </section>
+      </div>
+    </div>
+
+    <!-- Check proclamation results (Head Attorney) -->
+    <div class="hol-view" id="holProcView" hidden>
+      <div class="rd-heading">
+        <button type="button" class="back-btn" id="procBackBtn" aria-label="Back to the holidays" title="Back to the holidays"></button>
+        <div class="rd-title">
+          <h1 class="page-title" id="proclamationTitle">Holiday proclamation</h1>
+          <p class="page-subtitle">Read from the Official Gazette. Nothing is saved until you add the ticked dates.</p>
+        </div>
+      </div>
+
+      <div id="proclamationMessage" role="status"></div>
+      <div class="hol-proc-result" id="proclamationResult"></div>
+
+      <div class="hol-actions" id="procActions" hidden>
+        <button type="button" class="btn btn-secondary" id="proclamationCloseBtn">Cancel</button>
+        <button type="button" class="btn btn-primary" id="proclamationAddBtn">Add ticked dates</button>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/api-config.js"></script>
+<script src="js/auth-guard.js"></script>
+<script src="js/api-data.js"></script>
+<script src="js/render-helper.js"></script>
+<script src="js/components.js"></script>
+<script src="js/holidays.js"></script>
+</body>
+</html>

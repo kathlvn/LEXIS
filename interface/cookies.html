@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cookies — The Legal Office, Eastern Samar State University</title>
+<link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+
+<header class="site-header" id="siteHeader"></header>
+
+<!-- Cookie notice. Only sign-in cookies, no tracking, so no consent
+     banner. If a cookie or browser-storage key is added or removed, update
+     this page. The Legal Office approves the final wording. -->
+<main class="legal-main">
+  <section class="legal-hero legal-hero-gold">
+    <img class="legal-hero-symbol" src="img/icons/symbol-cookie.svg" alt="">
+    <!-- The kicker and reading time are new, for Legal Office review. -->
+    <p class="legal-hero-meta">
+      <span class="legal-hero-kicker">Sign-in cookies only</span>
+      <span class="legal-hero-dot" aria-hidden="true">·</span>
+      <span class="legal-hero-time">About 2 minutes to read</span>
+    </p>
+    <h1>Cookies</h1>
+    <p class="legal-hero-lede">LEXIS uses only the cookies it needs to keep you signed in. It has no advertising, tracking,
+      or analytics cookies.</p>
+    <div class="notice notice-draft">
+      <img src="img/icons/draft.svg" alt="">
+      <div>
+        <p class="notice-title">Draft for Legal Office review.</p>
+        <p class="notice-message">The wording on this page has not yet been approved by the ESSU Legal Office. Draft of 30 October 2026.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="legal-layout">
+    <!-- js/legal-page.js fills both "On this page" lists from the headings below.
+         data-toc on a heading gives a shorter label for the list. -->
+    <aside class="legal-aside">
+      <nav class="legal-toc" id="legalToc" aria-labelledby="legalTocTitle" hidden>
+        <p class="legal-kicker" id="legalTocTitle">On this page</p>
+        <ol class="legal-toc-list"></ol>
+      </nav>
+      <!-- New box, for Legal Office review. -->
+      <div class="legal-also">
+        <p class="legal-kicker">Also read</p>
+        <a class="text-link" href="privacy.html">Privacy Notice <img src="img/icons/arrow-right-green.svg" alt=""></a>
+        <a class="text-link" href="terms.html">Terms of Use <img src="img/icons/arrow-right-green.svg" alt=""></a>
+        <div class="legal-also-questions">
+          <p class="legal-also-title">Questions about this page?</p>
+          <a class="text-link" href="mailto:legaloffice@essu.edu.ph">legaloffice@essu.edu.ph</a>
+        </div>
+      </div>
+    </aside>
+
+    <div class="legal-reading">
+      <details class="legal-toc-phone" id="legalTocPhone" hidden>
+        <summary>
+          <span class="legal-toc-phone-text">On this page <span class="legal-toc-phone-count"></span></span>
+          <img src="img/icons/chevron-down-green.svg" alt="" width="24" height="24">
+        </summary>
+        <nav aria-label="On this page">
+          <ol class="legal-toc-list"></ol>
+        </nav>
+      </details>
+
+      <div class="legal-content">
+        <section class="legal-section" id="what">
+          <h2>What a cookie is</h2>
+          <p>A cookie is a small piece of data that a website asks your browser to keep and send back on your next
+            visit. LEXIS uses cookies only so it knows you have signed in.</p>
+        </section>
+
+        <section class="legal-section" id="list">
+          <h2>The cookies LEXIS uses</h2>
+          <div class="legal-table-wrap">
+            <!-- On phones this same table shows one card per cookie (css/base.css),
+                 using data-label for the small labels.
+                 "Sign out" replaced "Exit" (the button was renamed), for Legal Office review. -->
+            <table class="legal-table">
+              <caption class="visually-hidden">The cookies LEXIS uses</caption>
+              <thead>
+                <tr><th scope="col">Cookie</th><th scope="col">Who gets it</th><th scope="col">What it is for</th><th scope="col">How long it lasts</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row"><code>lois_track</code></th>
+                  <td data-label="Who gets it">Clients</td>
+                  <td data-label="What it is for">Keeps you signed in to My Requests after you enter your one-time code.</td>
+                  <td data-label="How long it lasts">Ends after 30 minutes without activity, 2 hours at most, or when you press Sign out.</td>
+                </tr>
+                <tr>
+                  <th scope="row"><code>lois_submit</code></th>
+                  <td data-label="Who gets it">New clients</td>
+                  <td data-label="What it is for">Lets you finish telling us who you are after you confirm your email address with a code.</td>
+                  <td data-label="How long it lasts">30 minutes, or until you finish.</td>
+                </tr>
+                <tr>
+                  <th scope="row"><code>lois_session</code></th>
+                  <td data-label="Who gets it">Legal Office staff</td>
+                  <td data-label="What it is for">Keeps staff signed in to the staff pages.</td>
+                  <td data-label="How long it lasts">Ends after 30 minutes without activity, 12 hours at most, or when staff log out.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>These cookies hold only a random code, not your name or email address. Your browser sends them only to
+            LEXIS, and the pages' own scripts cannot read them.</p>
+        </section>
+
+        <section class="legal-section" id="banner">
+          <h2 data-toc="No cookie banner">Why there is no cookie banner</h2>
+          <p>LEXIS cannot keep you signed in without these cookies, and it uses no others, so there is nothing to choose.
+            You can delete them in your browser's settings at any time; you will then need to sign in again.</p>
+        </section>
+
+        <section class="legal-section" id="storage">
+          <h2 data-toc="Other browser storage">Other browser storage (staff only)</h2>
+          <p>On the staff pages, LEXIS remembers in the browser's local storage (<code>sidebarCollapsed</code>) whether a
+            staff member has collapsed the side menu. It holds only that setting and is never sent to LEXIS. Clients'
+            pages store nothing in the browser besides the cookies above.</p>
+        </section>
+
+        <section class="legal-section" id="tracking">
+          <h2>No tracking</h2>
+          <ul>
+            <li>No analytics, advertising, or social media cookies or scripts.</li>
+            <li>No cookies from other websites.</li>
+            <li>The fonts and the "I am not a robot" check are served by LEXIS itself, so using them sends nothing to
+              another company. The robot check sets no cookie.</li>
+          </ul>
+        </section>
+
+        <section class="legal-section" id="more">
+          <h2>More information</h2>
+          <p>How we handle your personal information is explained in our <a href="privacy.html">Privacy Notice</a>.
+            For questions, email the ESSU Legal Office at
+            <a href="mailto:legaloffice@essu.edu.ph">legaloffice@essu.edu.ph</a>.</p>
+        </section>
+
+        <a class="text-link legal-back" href="#main">Back to top</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+
+<script src="js/components.js"></script>
+<script src="js/site-page.js" data-nav=""></script>
+<script src="js/api-config.js"></script>
+<script src="js/site-search.js"></script>
+<script src="js/legal-page.js"></script>
+</body>
+</html>

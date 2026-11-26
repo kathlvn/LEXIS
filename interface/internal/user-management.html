@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Management — The Legal Office Staff Console</title>
+<link rel="stylesheet" href="css/internal.css">
+<style>html{visibility:hidden;}</style>
+</head>
+<body>
+
+<header class="app-topbar" id="appTopbar"></header>
+
+<div class="app-shell">
+  <nav class="app-sidebar" id="appSidebar"></nav>
+
+  <!-- Two views: the staff list, and editing
+       one account. js/user-management.js switches between them. -->
+  <main class="app-main">
+
+    <!-- The list -->
+    <div class="um-view" id="umListView">
+      <div class="rd-heading">
+        <div class="rd-title">
+          <h1 class="page-title">User management</h1>
+          <p class="page-subtitle">Staff who can sign in to this console. Only the Head Attorney manages accounts.</p>
+        </div>
+        <button type="button" class="btn btn-primary" id="umAddBtn">Add a staff account</button>
+      </div>
+
+      <div id="umPageMsg" role="status"></div>
+
+      <!-- Add a staff account -->
+      <section class="rd-card um-card um-add" id="umAddCard" aria-labelledby="umAddTitle" hidden>
+        <h2 class="rd-card-title" id="umAddTitle">Add a staff account</h2>
+        <form class="um-form" id="umForm" novalidate>
+          <div class="um-fields">
+            <div class="rd-field">
+              <label class="rd-label" for="umName">Full name</label>
+              <input type="text" class="rd-input" id="umName" maxlength="150" autocomplete="off" required>
+            </div>
+            <div class="rd-field">
+              <label class="rd-label" for="umRole">Role</label>
+              <select class="rd-input" id="umRole">
+                <option value="legal_assistant">Legal Assistant</option>
+                <option value="attorney">Attorney</option>
+                <option value="head_attorney">Head Attorney</option>
+              </select>
+            </div>
+            <div class="rd-field">
+              <label class="rd-label" for="umEmail">Sign-in email</label>
+              <input type="email" class="rd-input" id="umEmail" maxlength="254" autocomplete="off" placeholder="name@essu.edu.ph" aria-describedby="umEmailHint" required>
+              <p class="rd-hint" id="umEmailHint">An @essu.edu.ph address. It can’t be changed later.</p>
+            </div>
+            <div class="rd-field">
+              <label class="rd-label" for="umPassword">Temporary password</label>
+              <input type="password" class="rd-input" id="umPassword" minlength="12" maxlength="256" autocomplete="new-password" aria-describedby="umPasswordHint" required>
+              <p class="rd-hint" id="umPasswordHint">At least 12 characters, not a common word or pattern, and not their name or email. Tell it to them in person; it isn’t emailed. It works for 72 hours; they choose their own at first login.</p>
+            </div>
+          </div>
+          <p class="um-note">A 6-digit code goes to the new email. The account is finished once you enter that code here.</p>
+          <div class="um-actions">
+            <p class="um-status error" id="umFormMessage" role="alert"></p>
+            <button type="button" class="btn btn-secondary" id="umFormCancelBtn">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="umFormSubmitBtn">Add account</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="rd-card um-list" aria-labelledby="umListTitle">
+        <div class="um-list-head">
+          <h2 class="um-list-title" id="umListTitle">Staff accounts</h2>
+          <p class="um-count" id="umCount"></p>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table um-table" id="umTable">
+            <thead><tr><th>Name and email</th><th>Role</th><th>Status</th><th>Sign-in email</th><th><span class="visually-hidden">Actions</span></th></tr></thead>
+          </table>
+        </div>
+        <p class="um-foot">Accounts are never deleted. Deactivate an account to stop it signing in; the person’s name stays on past requests and history. There is always at least one active Head Attorney.</p>
+      </section>
+    </div>
+
+    <!-- One account: Details on the left, Account (and Password) on the right -->
+    <div class="um-view" id="umEditView" hidden>
+      <div class="rd-heading">
+        <button type="button" class="back-btn" id="umBackBtn" aria-label="Back to the staff accounts" title="Back to the staff accounts"></button>
+        <div class="rd-title">
+          <h1 class="page-title" id="umEditTitle">Staff account</h1>
+          <p class="page-subtitle" id="umEditSub"></p>
+        </div>
+      </div>
+
+      <div id="umEditMsg" role="status"></div>
+
+      <div class="um-edit-layout">
+        <section class="rd-card um-card" id="umDetailsCard" aria-labelledby="umDetailsTitle"></section>
+        <div class="um-side side-sticky">
+          <section class="rd-card um-card" id="umAccountCard" aria-labelledby="umAccountTitle"></section>
+          <section class="rd-card um-card" id="umPasswordCard" aria-labelledby="umPasswordTitle"></section>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/api-config.js"></script>
+<script src="js/auth-guard.js"></script>
+<script src="js/api-data.js"></script>
+<script src="js/render-helper.js"></script>
+<script src="js/components.js"></script>
+<script src="js/user-management.js"></script>
+</body>
+</html>

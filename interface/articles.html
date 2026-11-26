@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>News and Articles — The Legal Office, Eastern Samar State University</title>
+<link rel="stylesheet" href="css/base.css">
+</head>
+<body>
+
+<header class="site-header" id="siteHeader"></header>
+
+<!-- js/articles.js fills the list and the count. -->
+<main class="articles-main">
+  <section class="articles-hero">
+    <!-- Decorative. The phone copy has a slightly thicker line. -->
+    <picture class="articles-hero-symbol">
+      <source media="(max-width: 640px)" srcset="img/icons/symbol-newspaper-phone.svg">
+      <img src="img/icons/symbol-newspaper.svg" alt="">
+    </picture>
+    <!-- New line, for Legal Office review. -->
+    <p class="articles-hero-kicker">From the ESSU Legal Office</p>
+    <h1>News and articles</h1>
+    <p class="articles-hero-lede">Announcements and short write-ups from the ESSU Legal Office.</p>
+    <p class="articles-hero-count" id="articleCount"></p>
+  </section>
+
+  <section class="articles-list">
+    <!-- Screen readers hear what appears here: "Loading articles…", or the empty message.
+         Above the list, so the empty message appears where the loading shapes
+         were instead of moving up into view (PERF-03). -->
+    <div id="articleListStatus" role="status"></div>
+    <div class="articles-list-area" id="articleListArea"></div>
+  </section>
+</main>
+
+<footer class="site-footer" id="siteFooter"></footer>
+
+<script src="js/components.js"></script>
+<script src="js/site-page.js" data-nav="articles"></script>
+<script src="js/api-config.js"></script>
+<script src="js/site-search.js"></script>
+<script src="js/article-format.js"></script>
+<script src="js/articles.js"></script>
+</body>
+</html>

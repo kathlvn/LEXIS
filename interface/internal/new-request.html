@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>New Request — The Legal Office Staff Console</title>
+<link rel="stylesheet" href="css/internal.css">
+<style>html{visibility:hidden;}</style>
+</head>
+<body>
+
+<header class="app-topbar" id="appTopbar"></header>
+
+<div class="app-shell">
+  <nav class="app-sidebar" id="appSidebar"></nav>
+
+  <!-- Walk-in form: three cards on the left, the Summary with
+       the buttons on the right. js/new-request.js fills the back button,
+       the Summary, the existing-client box and the chosen files. -->
+  <main class="app-main">
+    <div class="rd-heading" id="nrHeading">
+      <div class="rd-title">
+        <h1 class="page-title">New walk-in request</h1>
+        <p class="page-subtitle">For a request brought in person or on paper. Clients who can go online use My Requests instead.</p>
+      </div>
+    </div>
+
+    <form class="nr-columns" id="nrForm" novalidate>
+      <div class="nr-form-col">
+        <div id="nrErrors" class="nr-errors" role="alert" hidden></div>
+
+        <!-- Contact first: LEXIS looks the client up, so an existing client's saved details are shown, not retyped. -->
+        <section class="rd-card nr-card" aria-labelledby="nrContactTitle">
+          <div class="nr-card-head">
+            <h2 class="rd-card-title" id="nrContactTitle">Client contact</h2>
+            <p class="nr-card-note">LEXIS looks the client up as you type, so a returning client's details aren't typed again.</p>
+          </div>
+          <div class="nr-row">
+            <div class="rd-field">
+              <label class="rd-label" for="nrEmail">Email address</label>
+              <input type="email" class="rd-input" id="nrEmail" maxlength="254" autocomplete="off">
+              <label class="cb-check nr-check"><input type="checkbox" id="nrNoEmail"> <span>The client has no email address</span></label>
+            </div>
+            <p class="rd-hint nr-contact-hint" id="nrContactHint">With an email, the client gets updates and can follow the request online. Without one, they get a printed slip and a call from the office.</p>
+            <div class="rd-field" id="nrPhoneField" hidden>
+              <label class="rd-label" for="nrPhone">Contact number</label>
+              <input type="tel" class="rd-input" id="nrPhone" maxlength="20" autocomplete="off" placeholder="09XXXXXXXXX" aria-describedby="nrPhoneHint">
+              <span class="rd-hint" id="nrPhoneHint">The client gets a printed slip and a call from the office.</span>
+            </div>
+          </div>
+          <div class="nr-found" id="nrFound" role="status" hidden></div>
+        </section>
+
+        <!-- The same details the client gives on their own profile (portal.html). -->
+        <section class="rd-card nr-card" aria-labelledby="nrDetailsTitle">
+          <div class="nr-card-head">
+            <h2 class="rd-card-title" id="nrDetailsTitle">Client details</h2>
+            <p class="nr-card-note">The same details the client gives on their own profile.</p>
+          </div>
+          <div class="nr-row">
+            <div class="rd-field">
+              <label class="rd-label" for="nrLastName">Last name</label>
+              <input type="text" class="rd-input" id="nrLastName" maxlength="80" autocomplete="off">
+            </div>
+            <div class="rd-field">
+              <label class="rd-label" for="nrFirstName">First name</label>
+              <input type="text" class="rd-input" id="nrFirstName" maxlength="80" autocomplete="off">
+            </div>
+          </div>
+          <div class="nr-row">
+            <div class="rd-field">
+              <label class="rd-label" for="nrMiddleName">Middle name</label>
+              <input type="text" class="rd-input" id="nrMiddleName" maxlength="80" autocomplete="off">
+              <label class="cb-check nr-check"><input type="checkbox" id="nrNoMiddleName"> <span>No middle name</span></label>
+            </div>
+            <div class="rd-field">
+              <label class="rd-label" for="nrNameExt">Extension <span class="rd-label-note">optional</span></label>
+              <input type="text" class="rd-input" id="nrNameExt" maxlength="10" list="nrNameExtList" placeholder="Jr., Sr., III" autocomplete="off">
+              <datalist id="nrNameExtList"><option value="Jr."><option value="Sr."><option value="II"><option value="III"><option value="IV"></datalist>
+            </div>
+          </div>
+          <div class="nr-row">
+            <div class="rd-field">
+              <label class="rd-label" for="nrCategory">Requesting as</label>
+              <select class="rd-input" id="nrCategory" aria-describedby="nrCategoryHint">
+                <option value="">Select one</option>
+                <option value="essu_office">ESSU – Office / Department (head or key official)</option>
+                <option value="essu_employee">ESSU – Employee</option>
+                <option value="essu_student">ESSU – Student</option>
+                <option value="ext_government">Outside ESSU – Government agency</option>
+                <option value="ext_private">Outside ESSU – Private individual or organization</option>
+              </select>
+              <span class="rd-hint" id="nrCategoryHint"></span>
+            </div>
+            <div class="rd-field" id="nrOfficeField" hidden>
+              <label class="rd-label" for="nrOffice">Office or college</label>
+              <select class="rd-input" id="nrOffice">
+                <option value="">Select one</option>
+                <!-- offices from the Head Attorney's list are added here -->
+                <option value="other">Others (please specify)</option>
+              </select>
+              <input type="text" class="rd-input" id="nrOfficeOther" maxlength="200" placeholder="Type the office or college" aria-label="Office or college, typed" autocomplete="off" hidden>
+            </div>
+            <div class="rd-field" id="nrOrgField" hidden>
+              <label class="rd-label" for="nrOrganization">Agency or organization <span class="rd-label-note" id="nrOrgOptional">optional</span></label>
+              <input type="text" class="rd-input" id="nrOrganization" maxlength="200" autocomplete="off">
+            </div>
+          </div>
+          <div class="nr-row">
+            <div class="rd-field">
+              <label class="rd-label" for="nrPosition"><span id="nrPositionText">Position</span> <span class="rd-label-note">optional</span></label>
+              <input type="text" class="rd-input" id="nrPosition" maxlength="150" autocomplete="off">
+            </div>
+          </div>
+        </section>
+
+        <section class="rd-card nr-card" aria-labelledby="nrRequestTitle">
+          <div class="nr-card-head">
+            <h2 class="rd-card-title" id="nrRequestTitle">Request</h2>
+            <p class="nr-card-note">Only the services this client's category may use are listed.</p>
+          </div>
+          <div class="rd-field">
+            <label class="rd-label" for="nrService">Legal service</label>
+            <select class="rd-input" id="nrService"><option value="">Choose the client's category first</option></select>
+          </div>
+          <div class="nr-docs" id="nrDocsHint" hidden></div>
+
+          <div class="nr-letter" id="nrLetterField" hidden>
+            <p class="rd-label" id="nrLetterLabel">Endorsement letter from the office head <span class="rd-label-note">the dean, for students</span></p>
+            <input type="file" id="nrLetter" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" hidden>
+            <div id="nrLetterFile"></div>
+            <p class="rd-hint" id="nrLetterWhy"></p>
+          </div>
+
+          <div class="rd-field">
+            <label class="rd-label" for="nrDesc">Description</label>
+            <textarea class="rd-textarea nr-desc" id="nrDesc" maxlength="5000" rows="6" placeholder="The client's concern, as written on the paper form or as they explained it." aria-describedby="nrDescCounter"></textarea>
+            <p class="rd-hint nr-counter" id="nrDescCounter"><span id="nrDescCount">0</span> / 5000</p>
+          </div>
+
+          <div class="rd-field">
+            <p class="rd-label" id="nrFilesLabel">Documents the client handed over <span class="rd-label-note">optional</span></p>
+            <input type="file" id="nrFiles" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png" hidden>
+            <div id="nrFilesList"></div>
+            <p class="rd-hint">PDF, Word, JPG or PNG, up to 20 MB each. Filed as the client's documents, marked "added by staff". You can add more later on the Documents tab.</p>
+          </div>
+
+          <hr class="nr-divider">
+          <label class="cb-check nr-consent">
+            <input type="checkbox" id="nrConsent">
+            <span>The client signed the Data Privacy consent on the paper Legal Service Request Form.
+              <small class="rd-hint">Keep the signed form with the office's records.</small></span>
+          </label>
+        </section>
+      </div>
+
+      <aside class="rd-card nr-summary side-sticky" aria-labelledby="nrSummaryTitle">
+        <h2 class="rd-card-title" id="nrSummaryTitle">Summary</h2>
+        <dl class="nr-sum-list" id="nrSummary"></dl>
+        <hr class="nr-divider">
+        <button type="submit" class="btn btn-primary btn-block" id="nrSubmit">Create request</button>
+        <a class="btn btn-tertiary btn-block" href="requests-all.html">Cancel</a>
+        <p class="rd-hint nr-sum-note" id="nrSummaryNote"></p>
+      </aside>
+    </form>
+  </main>
+</div>
+
+<script src="js/api-config.js"></script>
+<script src="js/auth-guard.js"></script>
+<script src="js/api-data.js"></script>
+<script src="js/render-helper.js"></script>
+<script src="js/components.js"></script>
+<script src="js/new-request.js"></script>
+</body>
+</html>
